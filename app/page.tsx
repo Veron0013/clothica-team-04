@@ -25,7 +25,7 @@ export default function Home() {
 						Deploy Now
 					</a>
 					<a
-						className="flex h-12 w-full items-center justify-center rounded-full border border-solid bg-(--main-theme-light) text-(--main-color-ligth) px-5 transition-colors hover:border-transparent hover:bg-amber-300/[.04] dark:border-white/[.145] dark:hover:bg-amber-300 md:w-[158px]"
+						className="flex h-12 w-full items-center justify-center rounded-full border border-solid bg-(--main-theme-light) text-(--main-color-ligth) px-5 transition-colors hover:border-transparent hover:bg-amber-300/4 dark:border-white/[.145] dark:hover:bg-amber-300 md:w-[158px]"
 						href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
 						target="_blank"
 						rel="noopener noreferrer"
