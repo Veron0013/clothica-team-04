@@ -1,6 +1,12 @@
 import type { Metadata } from "next"
 import { Inter, Nunito_Sans } from "next/font/google"
 import "./globals.css"
+import { Suspense } from "react"
+import Loading from "./loading"
+import TanStackProvider from "@/components/TanStackProvider/TanStackProvider"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { Toaster } from "react-hot-toast"
+import AuthProvider from "@/components/AuthProvider/AuthProvider"
 
 const interSans = Inter({
 	variable: "--font-inter",
@@ -42,7 +48,21 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${interSans.variable} ${nunitoSans.variable} antialiased`}>{children}</body>
+			<body className={`${interSans.variable} ${nunitoSans.variable} antialiased`}>
+				<TanStackProvider>
+					<div className="layout">
+						<AuthProvider>
+							<Suspense fallback={<Loading />}>{/*<SearchBar />*/}</Suspense>
+							<Suspense fallback={<Loading />}>
+								<main className="main">{children}</main>
+							</Suspense>
+							{/*<Footer />*/}
+						</AuthProvider>
+					</div>
+					<Toaster />
+					<ReactQueryDevtools initialIsOpen={false} />
+				</TanStackProvider>
+			</body>
 		</html>
 	)
 }
