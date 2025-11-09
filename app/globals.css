@@ -71,7 +71,6 @@
   --color-scheme-6-border: var(--opacity-neutral-darkest-15);
   --color-scheme-6-accent: var(--color-neutral-darkest);
   --color-scheme-6-foreground: var(--color-deco-dark);
-
 }
 
 @media (prefers-color-scheme: dark) {
@@ -88,7 +87,8 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), "Inter", "Nunito Sans", sans-serif, Roboto, Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), "Inter", "Nunito Sans", sans-serif, Roboto,
+    Arial, Helvetica, sans-serif;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
