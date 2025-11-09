@@ -52,13 +52,13 @@ export default function RootLayout({
 			<body className={`${interSans.variable} ${nunitoSans.variable} antialiased`}>
 				<TanStackProvider>
 					<div className="layout">
-						{/*<AuthProvider>*/}
-						<Suspense fallback={<Loading />}>{/*<SearchBar />*/}</Suspense>
-						<Suspense fallback={<Loading />}>
-							<main className="main">{children}</main>
-						</Suspense>
-						<Footer />
-						{/*</AuthProvider>*/}
+						<AuthProvider>
+							<Suspense fallback={<Loading />}>{/*<SearchBar />*/}</Suspense>
+							<Suspense fallback={<Loading />}>
+								<main className="main">{children}</main>
+							</Suspense>
+							<Footer />
+						</AuthProvider>
 					</div>
 					<Toaster />
 					<ReactQueryDevtools initialIsOpen={false} />
