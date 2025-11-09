@@ -1,13 +1,14 @@
-import type { Metadata } from "next";
-import { Inter, Nunito_Sans } from "next/font/google";
-import "./globals.css";
-import { Suspense } from "react";
-import Loading from "./loading";
-import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { Toaster } from "react-hot-toast";
-import AuthProvider from "@/components/AuthProvider/AuthProvider";
+import type { Metadata } from "next"
+import { Inter, Nunito_Sans } from "next/font/google"
+import "./globals.css"
+import { Suspense } from "react"
+import Loading from "./loading"
+import TanStackProvider from "@/components/TanStackProvider/TanStackProvider"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+import { Toaster } from "react-hot-toast"
+import AuthProvider from "@/components/AuthProvider/AuthProvider"
 import Footer from "@/components/Footer/Footer";
+import Header from "@/components/Header/Header"
 
 const interSans = Inter({
   variable: "--font-inter",
@@ -55,7 +56,7 @@ export default function RootLayout({
         <TanStackProvider>
           <div className="layout">
             <AuthProvider>
-              <Suspense fallback={<Loading />}>{/*<SearchBar />*/}</Suspense>
+              <Suspense fallback={<Loading />}><Header /></Suspense>
               <Suspense fallback={<Loading />}>
                 <main className="main">{children}</main>
               </Suspense>
