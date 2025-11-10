@@ -42,7 +42,7 @@ export interface ApiQueryParams {
 }
 
 export type Category = {
-	id: string
+	_id: string
 	name: string
 	description: string
 	createdAt: string
