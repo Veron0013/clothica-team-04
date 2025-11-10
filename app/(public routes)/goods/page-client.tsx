@@ -36,7 +36,7 @@ const ProductsPageClient = () => {
 		//isLoading,
 		//error,
 	} = useQuery({
-		queryKey: ["GoodsByCategories", searchParams, currentPage],
+		queryKey: ["GoodsByCategories", searchParams, perPage],
 		queryFn: () => fetchQueryData(),
 		placeholderData: keepPreviousData,
 		refetchOnMount: false,
@@ -50,6 +50,8 @@ const ProductsPageClient = () => {
 		return res
 	}
 
+	console.log("params-c", searchParams)
+
 	const handleClick = () => {
 		setPerPage(perPage + 3)
 		setCurrentPage(currentPage + 1)
@@ -58,15 +60,17 @@ const ProductsPageClient = () => {
 
 		//router.push(`/goods?${searchParams}`)
 	}
-	console.log("data", searchParams, currentPage)
+	//console.log("data", searchParams, currentPage)
 
 	return (
 		<>
 			<div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
 				{data?.goods && data.goods.length > 0 && <GoodsList items={data.goods} />}
-				<button className={styles.cardCta} onClick={handleClick}>
-					Детальніше
-				</button>
+				{data?.goods && data?.perPage < data?.totalGoods && (
+					<button className={styles.cardCta} onClick={handleClick}>
+						Детальніше {data?.perPage} {data?.totalGoods}
+					</button>
+				)}
 				<MessageNoInfo
 					buttonText="go home"
 					text="За вашим запитом не знайдено жодних товарів, спробуйте змінити фільтри, або скинути їх"
