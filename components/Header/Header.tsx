@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import css from "./Header.module.css";
 import BurgerMenu from "../BurgerMenu/BurgerMenu";
+import Link from "next/link";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -25,25 +26,25 @@ export default function Header() {
         </a>
         <ul className={css.nav}>
           <li>
-            <a href="">Головна</a>
+            <Link href="" aria-label="Home page">Головна</Link>
           </li>
           <li>
-            <a href="">Товари</a>
+            <Link href="">Товари</Link>
           </li>
           <li>
-            <a href="">Категорії</a>
+            <Link href="">Категорії</Link>
           </li>
         </ul>
         <div className={css.auth}>
-          <a href="" className={css.navUp}>
+          <Link href="" className={css.navUp}>
             Вхід
-          </a>
-          <a href="" className={css.navIn}>
+          </Link>
+          <Link href="" className={css.navIn}>
             Реєстрація
-          </a>
-          {/* <a href="" className={css.navUpBasket}>
+          </Link>
+          {/* <Link href="" className={css.navUpBasket}>
             Кабінет
-          </a> */}
+          </Link> */}
           <div className={css.navCont}>
             <button
               className={css.burger}

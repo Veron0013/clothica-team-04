@@ -1,3 +1,4 @@
+import Link from "next/link";
 import css from "./BurgerMenu.module.css"
 
 interface BurgerMenuProps {
@@ -10,22 +11,22 @@ export default function BurgerMenu({menuOpen}: BurgerMenuProps ){
     >
     <ul className={css.burgerNav}>
           <li>
-            <a href="">Головна</a>
+            <Link href="">Головна</Link>
           </li>
           <li>
-            <a href="">Товари</a>
+            <Link href="">Товари</Link>
           </li>
           <li>
-            <a href="">Категорії</a>
+            <Link href="">Категорії</Link>
           </li>
         </ul>
         <div className={css.BurgerAuth}>
-          <a href="" className={css.BurgerNavUp}>
+          <Link href="" className={css.BurgerNavUp}>
             Вхід
-          </a>
-          <a href="" className={css.BurgerNavIn}>
+          </Link>
+          <Link href="" className={css.BurgerNavIn}>
             Реєстрація
-                </a> 
+                </Link> 
                 {/* <a href="" className={css.BurgerNavUpBasket}>
             Кабінет
           </a> */

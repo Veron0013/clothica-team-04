@@ -1,9 +1,7 @@
 .hidden{
   display: none;
 }
-.container{
-    background-color: #d6eac0;
-}
+
 .header {
   display: flex;
   align-items: center;
@@ -12,7 +10,9 @@ padding-top: 18px;
 padding-bottom: 18px;
 position: relative;
     z-index: 100;
+        background-color: #d6eac0;
 }
+
 .nav {
   display: none;
 }
