@@ -3,68 +3,73 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 80px 0; 
   text-align: center;
-  gap: 16px; 
+  margin: 24px 0 20px 0;
+  gap: 16px;
+  border-radius: 16px;
+  height: 154px;
+  width: 100%;
+  background-color: #d6eac0;
 }
 
 .message_text {
-  font-size: 16px;
-  line-height: 1.4;
-  color: #4b5563; 
-  max-width: 280px;
-  padding: 0 20px;
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 600;
+  width: 303px;
+  height: 54px;
+  color: #000;
 }
 .message_button {
-  padding: 4px 10px;
-  border-radius: 8px;
-  background-color: #C5E1A5; 
+  font-weight: 500;
+  font-size: 16px;
+  background-color: #c5e1a5;
   color: #000000;
   transition: background-color 0.2s ease;
   cursor: pointer;
   border: none;
-  font-size: 16px;
+  border-radius: 100px;
+  width: 303px;
+  gap: 24px;
+  height: 36px;
 }
 
 .message_button:hover,
 .message_button:focus {
-  background-color: #9DB484; 
+  background-color: #9db484;
 }
-
-
 
 /* TABLET */
 @media (min-width: 768px) {
   .message_container {
-    padding: 100px 0;
-    gap: 20px;
+    height: 127px;
   }
 
   .message_text {
-    max-width: 460px;
-    font-size: 18px;
+    width: 100%;
+    padding: 24px;
   }
 
   .message_button {
-    padding: 10px 28px;
     font-size: 16px;
+    font-weight: 600;
+    width: 115px;
+    height: 36px;
   }
 }
 
 /* DESKTOP */
 @media (min-width: 1440px) {
   .message_container {
-    padding: 120px 0;
-    gap: 24px;
+   width: 640px;
   }
 
   .message_text {
     max-width: 600px;
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .message_button {
-    padding: 12px 32px;
-    font-size: 17px;
+    font-weight: 500;
   }
 }
