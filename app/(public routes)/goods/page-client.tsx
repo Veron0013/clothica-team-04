@@ -72,13 +72,13 @@ const ProductsPageClient = () => {
 				</button>
 			)}
 
-			{!isFetching && displayedGoods?.length === 0 && (
-				<MessageNoInfo
-					buttonText="go home"
-					text="За вашим запитом не знайдено жодних товарів, спробуйте змінити фільтри, або скинути їх"
-					route="/"
-				/>
-			)}
+			{/*{!isFetching && displayedGoods?.length === 0 && (*/}
+			<MessageNoInfo
+				buttonText="go home"
+				text="За вашим запитом не знайдено жодних товарів, спробуйте змінити фільтри, або скинути їх"
+				route="/"
+			/>
+			{/*)}*/}
 		</div>
 	)
 }
