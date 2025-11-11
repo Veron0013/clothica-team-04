@@ -11,48 +11,52 @@ type Props = {
 
 export function GoodsList({ items }: Props) {
 	return (
-		<>
-			<ul className={styles.list}>
-				{items.map((item) => (
-					<li key={item._id} className={styles.item}>
-						<article className={styles.card} role="article" aria-label={item.name}>
-							{/* Зображення 3x4 */}
-							<div className={styles.cardImgWrap} style={{ position: "relative" }}>
-								<Image
-									src={item.image}
-									alt={item.name}
-									fill
-									sizes="(min-width:1440px) 25vw, (min-width:768px) 25vw, 50vw"
-									className={styles.cardImg}
-									priority={false}
-								/>
+		<ul className={styles.list}>
+			{items.map((item: Good, index: number) => (
+				<li key={item._id} id={item._id.toString()} style={{ animationDelay: `${index * 100}ms` }}>
+					<article className={styles.card} role="article" aria-label={item.name}>
+						<div className={styles.cardImgWrap} style={{ position: "relative" }}>
+							<Image
+								src={item.image}
+								alt={item.name}
+								fill
+								sizes="(min-width:1440px) 25vw, (min-width:768px) 25vw, 50vw"
+								className={styles.cardImg}
+								loading="lazy"
+							/>
+						</div>
+
+						<div className={styles.cardBody}>
+							<div className={styles.cardTop}>
+								<h3 className={styles.cardTitle}>{item.name}</h3>
 							</div>
 
-							<div className={styles.cardBody}>
-								{/* Заголовок + ціна */}
-								<div className={styles.cardTop}>
-									<h3 className={styles.cardTitle}>{item.name}</h3>
-									<span className={styles.cardPrice}>{item.price} грн</span>
+							<div className={styles.metaRow} aria-label="рейтинг та відгуки">
+								<div className={styles.metaRowInner}>
+									<svg width="16" height="16">
+										<use href="/sprite.svg#star-filled" />
+									</svg>
+									<span className={styles.metaStat}>{item.averageRating ?? 0}</span>
 								</div>
-
-								{/* Рейтинг та відгуки */}
-								<div className={styles.metaRow} aria-label="рейтинг та відгуки">
-									<span className={styles.metaStat}>★ {item.averageRating ?? 5}</span>
-									<span className={styles.metaDot} aria-hidden="true">
-										•
-									</span>
+								<div className={styles.metaRowInner}>
+									<svg width="16" height="16">
+										<use href="/sprite.svg#feedbacks" />
+									</svg>
 									<span className={styles.metaStat}>{item.feedbackCount ?? 2}</span>
 								</div>
-
-								{/* Кнопка */}
-								<Link href={`/goods/${item._id}`} className={styles.cardCta}>
-									Детальніше
-								</Link>
 							</div>
-						</article>
-					</li>
-				))}
-			</ul>
-		</>
+
+							<div className={styles.cardPrice}>
+								{item.price} {item.currency}
+							</div>
+						</div>
+
+						<Link href={`/goods/${item._id}`} className={styles.cardCta}>
+							Детальніше
+						</Link>
+					</article>
+				</li>
+			))}
+		</ul>
 	)
 }
