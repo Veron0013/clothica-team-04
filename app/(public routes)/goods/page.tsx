@@ -2,23 +2,25 @@
 
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query"
 import ProductsPageClient from "./page-client"
-import { GoodsFilter } from "@/lib/productsServise"
+//import { GoodsFilter } from "@/lib/productsServise"
 import { getGoods } from "@/lib/api/api"
+import { GoodsQuery } from "@/types/goods"
 
 interface Props {
-	searchParams: GoodsFilter
+	searchParams: Promise<GoodsQuery>
 }
 
 const ProductsPage = async ({ searchParams }: Props) => {
-	const page = 1
 	const queryClient = new QueryClient()
 
-	await queryClient.prefetchQuery({
-		queryKey: ["GoodsByCategories", page],
-		queryFn: () => getGoods({ perPage: 12, page }),
-	})
+	const queryParams = await searchParams
 
-	//const goods = await getGoods({ perPage: 12, page })
+	console.log("params", queryParams)
+
+	await queryClient.prefetchQuery({
+		queryKey: ["GoodsByCategories", queryParams],
+		queryFn: () => getGoods(queryParams),
+	})
 
 	return (
 		<HydrationBoundary state={dehydrate(queryClient)}>

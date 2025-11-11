@@ -1,7 +1,7 @@
 export type GoodCategory = {
 	_id: string
 	name: string
-	img_url: string
+	img_url?: string
 }
 
 export type Good = {
