@@ -47,16 +47,17 @@
 .containerSubscribe {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+  width: 100%;
+  overflow: visible;
 }
-
 .input {
-  outline: none;
+  flex: 0 0 auto;
+  max-width: 160px;
+  height: 40px;
+  padding: 8px 12px;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 16px;
-  padding: 8px;
-  width: 195px;
-  height: 40px;
   background: rgba(255, 255, 255, 0);
   color: #000;
 }
@@ -67,11 +68,12 @@
   color: rgba(0, 0, 0, 0.6);
 }
 .button {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 16px;
-  padding: 8px;
+  flex: 0 0 auto;
   width: 124px;
   height: 40px;
+  padding: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 16px;
   background: rgba(0, 0, 0, 0.05);
   font-weight: 500;
   font-size: 16px;
@@ -218,5 +220,18 @@
   .button {
     width: 124px;
     height: 36px;
+  }
+}
+
+@media (max-width: 319px) {
+  .containerSubscribe {
+    flex-wrap: wrap;
+  }
+  .input {
+    flex-basis: 100%;
+    .button {
+      flex-basis: 100%;
+      height: 40px;
+    }
   }
 }

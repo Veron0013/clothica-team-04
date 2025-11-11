@@ -9,18 +9,29 @@ import { toast } from "react-hot-toast";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
-  const [pending, setPending] = useState(false);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLocked, setIsLocked] = useState(false);
+
+  const isDisabled = isSubmitting || isLocked;
 
   const API = process.env.NEXT_PUBLIC_API_URL;
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (isDisabled) return;
+
+    setIsLocked(true);
+    const unlockEarly = setTimeout(() => setIsLocked(false), 1200);
 
     if (!API) {
       toastMessage(
         MyToastType.error,
         "Не налаштовано NEXT_PUBLIC_API_URL на фронтенді."
       );
+      clearTimeout(unlockEarly);
+      setIsLocked(false);
       return;
     }
 
@@ -28,12 +39,16 @@ export default function Footer() {
     const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized);
     if (!isValid) {
       toastMessage(MyToastType.error, "Введіть коректний email.");
+      clearTimeout(unlockEarly);
+      setIsLocked(false);
       return;
     }
 
     let loadingId: string | undefined;
+
     try {
-      setPending(true);
+      setIsSubmitting(true);
+
       loadingId = toastMessage(
         MyToastType.loading,
         "Відправляю підписку…"
@@ -62,7 +77,11 @@ export default function Footer() {
       );
     } finally {
       if (loadingId) toast.dismiss(loadingId);
-      setPending(false);
+      setIsSubmitting(false);
+      clearTimeout(unlockEarly);
+
+      setIsLocked(true);
+      setTimeout(() => setIsLocked(false), 800);
     }
   };
 
@@ -108,11 +127,17 @@ export default function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                 aria-label="Email для підписки"
+                disabled={isSubmitting}
+                pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
               />
-              <button type="submit" className={css.button} disabled={pending}>
-                {pending ? "Відправляю..." : "Підписатися"}
+              <button
+                type="submit"
+                className={css.button}
+                disabled={isDisabled}
+                aria-disabled={isDisabled}
+              >
+                {isSubmitting ? "Відправляю..." : "Підписатися"}
               </button>
             </form>
           </div>
@@ -130,7 +155,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 prefetch={false}
-                className={`${css.socialLinks}`}
+                className={css.socialLinks}
               >
                 <svg width="32" height="32" aria-hidden="true">
                   <use href="/sprite.svg#Facebook"></use>
@@ -144,7 +169,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 prefetch={false}
-                className={`${css.socialLinks}`}
+                className={css.socialLinks}
               >
                 <svg
                   className={css.svgInstagram}
@@ -163,7 +188,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 prefetch={false}
-                className={`${css.socialLinks}`}
+                className={css.socialLinks}
               >
                 <svg width="32" height="32" aria-hidden="true">
                   <use href="/sprite.svg#X"></use>
@@ -177,7 +202,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 prefetch={false}
-                className={`${css.socialLinks}`}
+                className={css.socialLinks}
               >
                 <svg width="32" height="32" aria-hidden="true">
                   <use href="/sprite.svg#Youtube"></use>
