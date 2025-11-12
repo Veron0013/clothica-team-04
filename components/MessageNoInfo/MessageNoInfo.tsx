@@ -1,8 +1,6 @@
 // components/MessageNoInfo/MessageNoInfo.tsx
 
 "use client"
-
-
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './MessageNoInfo.module.css';
