@@ -2,7 +2,7 @@ import { cookies } from "next/headers"
 import { nextServer } from "./api"
 import { User } from "@/types/user"
 import { Note, NoteId, NotesData, Tag } from "@/types/note"
-import { ApiQueryParams, SearchParams } from "./clientApi"
+import { ApiQueryParams, SearchParams} from "./clientApi"
 import { PER_PAGE } from "../vars"
 
 export const checkServerSession = async () => {
@@ -62,3 +62,4 @@ export const fetchNotesServer = async (queryParams: ApiQueryParams): Promise<Not
 
 	return response.data
 }
+
