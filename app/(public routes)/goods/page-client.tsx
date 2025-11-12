@@ -88,7 +88,8 @@ const ProductsPageClient = () => {
 				<MessageNoInfo
 					buttonText={LEAVE_REVIEW_MESSAGE}
 					text="У цього товару ще немає відгуків"
-					route="/"
+				route="/"
+				
 				/>
 				<MessageNoInfo
 					buttonText={BEFORE_SHOPPING_MESSAGE}
