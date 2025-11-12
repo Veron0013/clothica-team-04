@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import AuthComponent from "@/components/AuthComponent/AuthComponent";
+import AuthComponent from "@/components/AuthComponent/AuthComponent"
 
 const SignIn = () => {
-  return <AuthComponent login={true} />;
-};
+	return <AuthComponent login={true} />
+}
 
-export default SignIn;
+export default SignIn
