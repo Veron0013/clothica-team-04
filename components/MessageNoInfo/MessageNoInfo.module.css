@@ -17,7 +17,7 @@
   line-height: 1.5;
   font-weight: 600;
   width: 303px;
-  height: 54px;
+  height: auto;
   color: #000;
 }
 .message_button {
@@ -30,7 +30,6 @@
   border: none;
   border-radius: 100px;
   width: 303px;
-  gap: 24px;
   height: 36px;
 }
 

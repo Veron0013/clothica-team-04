@@ -8,14 +8,15 @@ import styles from './MessageNoInfo.module.css';
 interface MessageNoInfoProps {
 	text: string
 	buttonText: string
-	route?: string // '/goods' | '/categories'
+  route?: string // '/goods' | '/categories'
 }
 
 
 export default function MessageNoInfo({
     text,
     buttonText,
-    route = '/goods' }: MessageNoInfoProps)
+  route = '/goods',
+}: MessageNoInfoProps)
 {
   const router = useRouter();
 
