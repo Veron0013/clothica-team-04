@@ -1,49 +1,24 @@
-"use client"
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from "@tanstack/react-query";
+import { getCategories } from "@/lib/api/api";
+import CategoriesPageClient from "./page-client";
 
-import React, { useState, useEffect } from "react"
-//import CategoriesList from "@/components/CategoriesList/CategoriesList"
-import { Category } from "@/lib/api/clientApi" // Наш імітований запит
+export default async function CategoriesPage() {
+  const queryClient = new QueryClient();
+  const initialPage = 1;
+  const limit = 6;
 
-const CategoriesPage = () => {
-	const [categories, setCategories] = useState<Category[]>([]) // усі категорії
-	const [totalCategories, setTotalCategories] = useState(0) // кількість категорій
-	const [isLoading, setIsLoading] = useState(false)
+  await queryClient.prefetchQuery({
+    queryKey: ["categories", initialPage],
+    queryFn: () => getCategories(initialPage, limit),
+  });
 
-	const INITIAL_LIMIT = 6 // початок
-	const ADDITION_LIMIT = 3 // додавання
-
-	const handleLoadMore = async () => {
-		setIsLoading(true)
-
-		const currentShow = categories.length
-
-		const response = { data: { categories: [] } }
-
-		//  не заміняю старі категорії, а додаю до них нові.
-		setCategories((prevCategories) => [...prevCategories, ...response.data.categories])
-
-		setIsLoading(false)
-	}
-
-	// Кнопку ховати : при загрузці та коли завантажили всі доступні категорії
-	const shouldShowButton = !isLoading && categories.length < totalCategories
-
-	return (
-		<div>
-			<h1>Категорії</h1>
-			<p>поки без стілізаціі - перевірка що все працює</p>
-
-			{/*<CategoriesList categories={categories} />*/}
-
-			{isLoading && <p>Завантаження...</p>}
-
-			{shouldShowButton && (
-				<button type="button" onClick={handleLoadMore}>
-					Показати більше
-				</button>
-			)}
-		</div>
-	)
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <CategoriesPageClient />
+    </HydrationBoundary>
+  );
 }
-
-export default CategoriesPage
