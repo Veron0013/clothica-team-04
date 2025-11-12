@@ -17,7 +17,7 @@ type BasketState = {
 	clearBasket: () => void
 }
 
-export const useBasket = create<BasketState>((set, get) => ({
+export const useBasket = create<BasketState>((set) => ({
 	goods: [],
 
 	addGood: (good) =>
@@ -57,10 +57,4 @@ export const useBasket = create<BasketState>((set, get) => ({
 		})),
 
 	clearBasket: () => set({ goods: [] }),
-
-	showBasket: () =>
-		set((state) => {
-			console.log(state.goods)
-			return {}
-		}),
 }))
