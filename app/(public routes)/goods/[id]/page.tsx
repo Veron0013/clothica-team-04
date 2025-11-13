@@ -1,10 +1,7 @@
-import React from "react"
 import { notFound } from "next/navigation"
 import { QueryClient, dehydrate, HydrationBoundary } from "@tanstack/react-query"
 import { getGoodByIdServer, getFeedbackByGoodIdServer } from "@/lib/api/productsServer"
-import { Good } from "@/types/goods"
 import GoodPageClient from "@/components/GoodPage/GoodPage"
-import { Metadata } from "next"
 import { REVIEWS_PER_LOAD } from "@/lib/vars"
 
 type GoodPageProps = {
@@ -75,20 +72,20 @@ export default async function Page({ params, searchParams }: GoodPageProps) {
 		//if (goodState?.status !== "error") {
 		//	throw goodState?.error
 		//}
-	} catch (error: Error) {
+	} catch (error) {
 		console.log("Error loading product data:", error)
 
-		if (error?.response?.status === 404 || error?.status === 404) {
-			notFound()
-		}
+		//if (error?.response?.status === 404 || error?.status === 404) {
+		//	notFound()
+		//}
 
-		if (error?.response?.status >= 500 || error?.status >= 500) {
-			return (
-				<div style={{ color: "red", textAlign: "center", padding: "50px" }}>
-					На жаль, виникла помилка при завантаженні даних.
-				</div>
-			)
-		}
+		//if (error?.response?.status >= 500 || error?.status >= 500) {
+		//	return (
+		//		<div style={{ color: "red", textAlign: "center", padding: "50px" }}>
+		//			На жаль, виникла помилка при завантаженні даних.
+		//		</div>
+		//	)
+		//}
 	}
 	const dehydratedState = dehydrate(queryClient)
 

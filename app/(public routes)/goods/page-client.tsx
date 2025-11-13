@@ -1,7 +1,7 @@
 "use client"
 
 import { GoodsList } from "@/components/GoodsList"
-import { getGoods, getUserOrders } from "@/lib/api/api"
+import { getGoods } from "@/lib/api/api"
 import toastMessage, { MyToastType } from "@/lib/messageService"
 import { PER_PAGE } from "@/lib/vars"
 import { Good, GoodsQuery } from "@/types/goods"
