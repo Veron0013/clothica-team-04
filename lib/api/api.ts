@@ -1,7 +1,7 @@
 import { CategoriesResponse } from "@/types/categories"
 import { AllFilters } from "@/types/filters"
 import { BasketStoreGood, Good, GoodsQuery, GoodsResponse } from "@/types/goods"
-import { OrderItem } from "@/types/orders"
+import { Order } from "@/types/orders"
 import axios, { AxiosError } from "axios"
 
 export type ApiError = AxiosError<{ error: string }>
@@ -36,16 +36,6 @@ export const getCategories = async (page: number, limit: number): Promise<Catego
 export const getFilterOptions = async (): Promise<AllFilters> => {
 	const response = await nextServer.get("/goods/all-filters")
 	return response.data
-}
-
-export interface Order {
-  id: string;
-  orderNumber: string;     // "1235960"
-  createdAt: string;       // дата заказа
-  status: "in_process" | "completed" | "canceled" | "assembling" | string;
-  totalPrice: number;
-  currency: string;
-  items: OrderItem[];
 }
 
 export const getUserOrders = async (userId: string): Promise<Order[]> => {

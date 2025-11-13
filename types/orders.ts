@@ -21,9 +21,11 @@ export interface Order {
 	userId: string | null
 	orderNumber: string
 	totalAmount: number
-	status: string // можна зробити enum, якщо використовуєш ORDER_STATUS
+	status: "in_process" | "completed" | "canceled" | "assembling" | string;
 	deliveryDetails: DeliveryDetails
 	createdAt: string // або Date, якщо перетворювати після fetch
 	updatedAt: string // або Date
 	items: OrderItem[]
+	totalPrice: number;
+	currency: string;
 }

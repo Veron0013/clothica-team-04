@@ -12,7 +12,6 @@ import css from "./ProfilePage.module.css";
 import { Order } from "@/types/orders";
 import { getUserOrders } from "@/lib/api/api";
 import MessageNoInfo from "@/components/MessageNoInfo/MessageNoInfo";
-import { div } from "framer-motion/client";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -20,7 +19,7 @@ export default function ProfilePage() {
     (state) => state.clearIsAuthenticated
   );
 
-  const userId = useAuthStore((state) => state.user?.id);
+  const userId = useAuthStore((state) => state.user?._id);
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoadingOrders, setIsLoadingOrders] = useState(false);
   const [ordersError, setOrdersError] = useState<string | null>(null);
@@ -55,6 +54,7 @@ export default function ProfilePage() {
         setOrdersError(null);
 
         const data = await getUserOrders(userId);
+        console.log(data)
         setOrders(data);
       } catch (error) {
         console.error(error);
@@ -116,7 +116,6 @@ export default function ProfilePage() {
                     </p>
                     <p className={css.orderNumber}>№ {order.orderNumber}</p>
                   </div>
-
                   <div className={css.orderCol}>
                     <p className={css.orderLabel}>Сума: </p>
                     <p className={css.orderValue}>
