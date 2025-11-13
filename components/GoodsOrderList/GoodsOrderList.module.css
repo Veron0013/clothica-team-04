@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 16px;
 }
 
 .basketCard {
@@ -22,7 +21,6 @@
   justify-content: space-between;
   gap: 12px;
   padding: 12px;
-  border: 1px solid #ddd;
   border-radius: 8px;
 }
 
@@ -30,9 +28,7 @@
   .basketItem {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    margin-left: 24px;
-    min-width: 488px;
+    justify-content: space-between;
   }
 }
 
@@ -46,13 +42,17 @@
 .basketItemInfo {
   flex: 1;
   display: flex;
-  flex-direction: column;
-  margin-bottom: 8px;
 }
 
 @media screen and (min-width: 768px) {
   .basketItemInfo {
     margin-right: 32px;
+    flex-direction: row;
+    align-items: center;
+  }
+  .basketItemHead {
+    margin-right: 8px;
+    max-width: 160px;
   }
 }
 
@@ -77,9 +77,16 @@
   line-height: 1.5;
   color: #000;
 }
+
 .basketInputBtn {
   display: flex;
   justify-content: space-between;
+}
+
+@media screen and (min-width: 768px) {
+  .basketInputBtn {
+    align-items: center;
+  }
 }
 
 .basketItemQuantity {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useBasket } from "@/stores/basketStore";
 import { BasketStoreGood } from "@/types/goods";
 import Image from "next/image";
@@ -46,6 +46,17 @@ export default function GoodsOrderList() {
     fetchGoods();
   }, [basketGoods]);
 
+  //  Обчислення проміжного підсумку та загальної суми
+  const subtotal = useMemo(() => {
+    return goodsData.reduce(
+      (sum, item) => sum + item.price * (item.quantity || 1),
+      0
+    );
+  }, [goodsData]);
+
+  const deliveryCost = subtotal > 0 ? 99 : 0; // умовна доставка
+  const total = subtotal + deliveryCost;
+
   if (loading) return <div className={css.basketLoading}>Loading...</div>;
   if (goodsData.length === 0)
     return <div className={css.basketEmpty}>Кошик порожній</div>;
@@ -62,13 +73,15 @@ export default function GoodsOrderList() {
           />
           <div className={css.basketCard}>
             <div className={css.basketItemInfo}>
-              <div className={css.basketItemName}>{item.name}</div>
-              {item.feedbackCount !== undefined && (
-                <div className={css.basketItemFeedback}>
-                  {item.averageRating ? `⭐ ${item.averageRating} / ` : ""}
-                  {item.feedbackCount} відгуків
-                </div>
-              )}
+              <div className={css.basketItemHead}>
+                <div className={css.basketItemName}>{item.name}</div>
+                {item.feedbackCount !== undefined && (
+                  <div className={css.basketItemFeedback}>
+                    {item.averageRating ? `⭐ ${item.averageRating} / ` : ""}
+                    {item.feedbackCount} відгуків
+                  </div>
+                )}
+              </div>
               <div className={css.basketItemPrice}>
                 {item.price} {item.currency}
               </div>
@@ -96,6 +109,21 @@ export default function GoodsOrderList() {
           </div>
         </div>
       ))}
+
+      <div className={css.basketSummary}>
+        <div className={css.basketSummaryRow}>
+          <span>Проміжний підсумок:</span>
+          <span>{subtotal.toFixed(2)} грн</span>
+        </div>
+        <div className={css.basketSummaryRow}>
+          <span>Доставка:</span>
+          <span>{deliveryCost.toFixed(2)} грн</span>
+        </div>
+        <div className={`${css.basketSummaryRow} ${css.basketSummaryTotal}`}>
+          <span>Всього:</span>
+          <span>{total.toFixed(2)} грн</span>
+        </div>
+      </div>
     </div>
   );
 }
