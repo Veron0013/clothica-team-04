@@ -11,9 +11,9 @@ interface Props {
 const ProductsPage = async ({ searchParams }: Props) => {
 	const queryClient = new QueryClient()
 
-	const queryParams = await searchParams
+	//const queryParams = await searchParams
 
-	console.log("params", queryParams)
+	//console.log("params", queryParams)
 
 	return (
 		<>
