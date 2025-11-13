@@ -1,5 +1,6 @@
+import { CategoriesResponse } from "@/types/categories"
 import { AllFilters } from "@/types/filters"
-import { GoodsQuery, GoodsResponse } from "@/types/goods"
+import { BasketStoreGood, Good, GoodsQuery, GoodsResponse } from "@/types/goods"
 import axios, { AxiosError } from "axios"
 
 export type ApiError = AxiosError<{ error: string }>
@@ -14,8 +15,20 @@ export const getGoods = async (searchParams: GoodsQuery): Promise<GoodsResponse>
 	return response.data
 }
 
-export const getCategories = async (): Promise<GoodsResponse> => {
-	const response = await nextServer.get("/categories")
+export type BasketGoodsParams = {
+	goodIds: Good["_id"][]
+}
+
+export const getGoodsFromArray = async (query: BasketGoodsParams): Promise<BasketStoreGood[]> => {
+	const response = await nextServer.post("/goods/from-array", query)
+	return response.data
+}
+
+export const getCategories = async (page: number, perPage: number): Promise<CategoriesResponse> => {
+	const response = await nextServer.get("/categories", {
+		params: { page, perPage },
+	})
+
 	return response.data
 }
 
