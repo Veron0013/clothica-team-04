@@ -3,8 +3,8 @@ import { create } from "zustand"
 
 type StoreGood = {
 	id: Good["_id"]
-	//name?: string
-	//price?: number
+	color?: string
+	size?: string
 	quantity: number
 }
 
