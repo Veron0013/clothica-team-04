@@ -6,12 +6,14 @@ import {
   GoodsQuery,
   GoodsResponse,
 } from "@/types/goods";
+import { Order } from "@/types/orders";
 import axios, { AxiosError } from "axios";
 
 export type ApiError = AxiosError<{ error: string }>;
 
 export const nextServer = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL + "/",
+  //baseURL: process.env.NEXT_PUBLIC_API_URL + "/",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   withCredentials: true,
 });
 
@@ -46,5 +48,10 @@ export const getCategories = async (
 
 export const getFilterOptions = async (): Promise<AllFilters> => {
   const response = await nextServer.get("/goods/all-filters");
+  return response.data;
+};
+
+export const getUserOrders = async (userId: string): Promise<Order[]> => {
+  const response = await nextServer.get<Order[]>(`/orders/${userId}`);
   return response.data;
 };
