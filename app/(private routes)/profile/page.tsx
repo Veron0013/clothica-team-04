@@ -12,6 +12,7 @@ import css from "./ProfilePage.module.css";
 import { Order } from "@/types/orders";
 import { getUserOrders } from "@/lib/api/api";
 import MessageNoInfo from "@/components/MessageNoInfo/MessageNoInfo";
+import { div } from "framer-motion/client";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -19,7 +20,7 @@ export default function ProfilePage() {
     (state) => state.clearIsAuthenticated
   );
 
-  const userId = useAuthStore((state) => state.user?.id); 
+  const userId = useAuthStore((state) => state.user?.id);
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoadingOrders, setIsLoadingOrders] = useState(false);
   const [ordersError, setOrdersError] = useState<string | null>(null);
@@ -81,7 +82,7 @@ export default function ProfilePage() {
     }
   };
 
-   return (
+  return (
     <div className={css.profile}>
       <h2 className={css.title}>Кабінет</h2>
 
@@ -113,18 +114,18 @@ export default function ProfilePage() {
                     <p className={css.orderDate}>
                       {new Date(order.createdAt).toLocaleDateString("uk-UA")}
                     </p>
-                    <p className={css.orderNumber}>№{order.orderNumber}</p>
+                    <p className={css.orderNumber}>№ {order.orderNumber}</p>
                   </div>
 
                   <div className={css.orderCol}>
-                    <p className={css.orderLabel}>Сума:</p>
+                    <p className={css.orderLabel}>Сума: </p>
                     <p className={css.orderValue}>
                       {order.totalPrice} {order.currency}
                     </p>
                   </div>
 
-                  <div className={css.orderCol}>
-                    <p className={css.orderLabel}>Статус:</p>
+                  <div className={css.orderColSt}>
+                    <p className={css.orderLabel}>Статус: </p>
                     <p className={css.orderValue}>
                       {formatStatus(order.status)}
                     </p>
@@ -136,7 +137,7 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <div className={css.orderBut}>
+      <div className="container">
         <button
           type="button"
           className={css.logoutBtn}
@@ -146,7 +147,49 @@ export default function ProfilePage() {
           {isLoggingOut ? "Виходжу..." : "Вийти з кабінету"}
         </button>
       </div>
-    </div>
+      </div>
   );
 }
 
+// import UserInfoForm from "@/components/UserInfoForm/UserInfoForm";
+// import Link from "next/link";
+// import css from "./ProfilePage.module.css";
+
+// export default function ProfilePage() {
+//   return (
+//     <div className="container">
+//       <h2 className={css.title}>Кабінет</h2>
+//       <div className={css.profCont}>
+//         <div className={css.information}>
+//           <UserInfoForm />
+//         </div>
+//         <div className={css.order}>
+//           <h3 className={css.text}>Мої замовлення</h3>
+//           <ul className={css.orderList}>
+//             <li className={css.orderItem}>
+//               <div className={css.orderCol}>
+//                 <p className={css.orderDate}> 01.10.2025</p>
+//                 <p className={css.orderNumber}>№ 23497545</p>
+//               </div>
+
+//               <div className={css.orderCol}>
+//                 <p className={css.orderLabel}>Сума: </p>
+//                 <p className={css.orderValue}>1900 грн</p>
+//               </div>
+
+//               <div className={css.orderColSt}>
+//                 <p className={css.orderLabel}>Статус:</p>
+//                 <p className={css.orderValue}>Виконано</p>
+//               </div>
+//             </li>
+//           </ul>
+//         </div>
+//       </div>
+//       <div className={css.buttonLog}>
+//         <div className={css.logoutBtn}>
+//           <Link href="">Вийти з кабінету</Link>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
