@@ -19,10 +19,8 @@ export default function Header() {
   const setUser = useAuthStore((s) => s.setUser);
   const clearIsAuthenticated = useAuthStore((s) => s.clearIsAuthenticated);
 
-  // ✅ якщо стор уже каже, що логін виконано — вважаємо, що можна рендерити одразу
   const ready = authChecked || isAuthenticated;
 
-  // піднімаємо сесію з бекенда (на випадок f5)
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -76,6 +74,12 @@ export default function Header() {
           <div className={css.auth}>
             {!ready ? null : isAuthenticated ? (
               <>
+                <Link href="/profile" className={css.navUpBasket}>
+                  Кабінет
+                </Link>
+              </>
+            ) : (
+              <>
                 <Link href="/sign-in" className={css.navUp}>
                   Вхід
                 </Link>
@@ -83,10 +87,6 @@ export default function Header() {
                   Реєстрація
                 </Link>
               </>
-            ) : (
-              <Link href="/profile" className={css.navUpBasket}>
-                Кабінет
-              </Link>
             )}
 
             <div className={css.navCont}>
