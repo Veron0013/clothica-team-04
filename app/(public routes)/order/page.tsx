@@ -3,7 +3,7 @@
 import { useAuthStore } from "@/stores/authStore"
 import { useBasket } from "@/stores/basketStore"
 import { useRouter } from "next/navigation"
-import css from "./UserInfoForm.module.css" //wrong
+import css from "@/components/UsUserInfoForm/UserInfoForm.module.css" //wrong
 
 const OrderPage = () => {
 	const user = useAuthStore((state) => state.user)
