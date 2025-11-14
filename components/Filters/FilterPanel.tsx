@@ -8,8 +8,14 @@ import css from "./FilterPanel.module.css"
 import { BREAKPOINTS } from "@/lib/vars"
 import { AllFilters } from "@/types/filters"
 import { getFilterOptions } from "@/lib/api/api"
+import Link from "next/link"
 
-export default function FilterPanel() {
+interface Props {
+	vieved: number
+	total: number
+}
+
+export default function FilterPanel({ total, vieved }: Props) {
 	const isMobile = useMediaQuery(`(max-width: ${BREAKPOINTS.mobile})`)
 	const [isOpen, setIsOpen] = useState(false)
 	const [filters, setFilters] = useState<AllFilters | null>({
@@ -39,6 +45,11 @@ export default function FilterPanel() {
 		<>
 			{!isMobile ? (
 				<aside className={css.filterPanel__aside}>
+					<h3>Фільтри</h3>
+					<Link href="/goods">Скинути всі</Link>
+					<p>
+						Показано {vieved} із {total}
+					</p>
 					<Filter options={filters} />
 				</aside>
 			) : (
