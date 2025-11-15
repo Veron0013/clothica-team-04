@@ -16,8 +16,8 @@ export default function GoodForPurchase({ good }: GoodForPurchaseProps) {
 	const { addGood } = useBasket();
 	const router = useRouter()
 
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [selectedSize, setSelectedSize] = useState<string>("");
+  const [selectedColor, setSelectedColor] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
 
   // Логіка ініціалізації зображень

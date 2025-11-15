@@ -80,6 +80,13 @@
 
 }
 
+@media (min-width: 768px) {
+  .controls {
+    justify-content: flex-end;
+  }
+}
+
+
 .btnPrev,
 .btnNext {
   width: 50px;
