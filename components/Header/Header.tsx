@@ -10,30 +10,27 @@ import { useBasket } from "@/stores/basketStore"
 import { getMe } from "@/lib/api/clientApi"
 
 export default function Header() {
-	const [menuOpen, setMenuOpen] = useState(false)
-	const [authChecked, setAuthChecked] = useState(false)
-
 	const router = useRouter()
+	const [menuOpen, setMenuOpen] = useState(false)
 	const { isAuthenticated, setUser, clearIsAuthenticated } = useAuthStore()
+	const [authChecked, setAuthChecked] = useState(isAuthenticated)
 
 	const { goods } = useBasket()
 	const basketCount = goods.reduce((sum, item) => sum + item.quantity, 0)
 	// ✅ якщо стор уже каже, що логін виконано — вважаємо, що можна рендерити одразу
 	const ready = authChecked || isAuthenticated
 
-	console.log(
-		"header-user",
-		useAuthStore((s) => s.user)
-	)
 	useEffect(() => {
 		//if (isAuthenticated) return setAuthChecked(true)
 
 		const fetchCurrentUser = async () => {
 			try {
-				const user = await getMe()
-				if (!user) throw new Error()
-				setUser(user)
-			} catch {
+				const userData = await getMe()
+				//console.log("header-user", userData)
+				if (!userData) throw new Error()
+				setUser(userData)
+			} catch (e) {
+				//console.log("header-error", e)
 				if (!isAuthenticated) clearIsAuthenticated()
 			} finally {
 				if (!isAuthenticated) setAuthChecked(true)
@@ -44,6 +41,7 @@ export default function Header() {
 
 	// невеликий QoL: якщо стан вже став isAuthenticated=true (з форми) — не чекай fetch
 	useEffect(() => {
+		//console.log("header-user-effect", isAuthenticated, user)
 		if (isAuthenticated) setAuthChecked(true)
 	}, [isAuthenticated])
 

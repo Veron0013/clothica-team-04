@@ -20,11 +20,12 @@ export type RestorePasswordRequest = {
 export type RegisterRequest = {
 	phone: string
 	password: string
-	username: string
+	name: string
 }
 
 type CheckSessionRequest = {
-	success: boolean
+	status: number
+	statusText: string
 }
 
 export interface SearchParams {
@@ -48,15 +49,17 @@ export type Category = {
 
 export type UpdateUserRequest = {
 	username?: string
-	city?: string
-	warehouse?: string
-	fullname?: string
+	name?: string
+	lastName?: string
 	phone?: string
+	email?: string
+	warehoseId?: string
+	warehoseString?: string
 	avatar?: File | null
 }
 
 export type AuthValues = {
-	username?: string
+	name?: string
 	phone: string
 	password: string
 }
@@ -83,11 +86,13 @@ export const logout = async (): Promise<void> => {
 
 export const checkSession = async () => {
 	const res = await nextAuthServer.get<CheckSessionRequest>("/auth/me")
-	return res.data.success
+	//console.log("checkSession", res.data, res.statusText === "OK")
+	return res.statusText === "OK" && res.status === 200
 }
 
 export const getMe = async () => {
 	const refreshSession = await checkSession()
+	//console.log("getMe", refreshSession)
 	if (refreshSession) {
 		const { data } = await nextAuthServer.get<User>("/users/me")
 		return data
@@ -101,7 +106,8 @@ export const updateMe = async (payload: UpdateUserRequest) => {
 
 	if (refreshSession) {
 		const formData = new FormData()
-
+		if (payload.name) formData.append("name", payload.name)
+		if (payload.lastName) formData.append("lastName", payload.lastName)
 		if (payload.username) formData.append("username", payload.username)
 		if (payload.avatar) formData.append("avatar", payload.avatar)
 
