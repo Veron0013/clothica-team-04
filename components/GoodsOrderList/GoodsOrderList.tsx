@@ -71,7 +71,7 @@ export default function GoodsOrderList() {
 	return (
 		<div className={css.basketContainer}>
 			{goodsData.map((item) => (
-				<div key={item._id} className={css.basketItem}>
+				<div key={item.key} className={css.basketItem}>
 					<Image src={item.image} alt={item.name} width={82} height={100} className={css.basketItemImage} />
 					<div className={css.basketCard}>
 						<div className={css.basketItemInfo}>
@@ -112,11 +112,11 @@ export default function GoodsOrderList() {
 								type="number"
 								min={1}
 								value={item.quantity}
-								onChange={(e) => updateGoodQuantity(item._id, Number(e.target.value))}
+								onChange={(e) => updateGoodQuantity(item.key, Number(e.target.value))}
 								className={css.basketItemQuantity}
 							/>
 
-							<button onClick={() => removeGood(item._id)} className={css.basketItemRemove}>
+							<button onClick={() => removeGood(item.key)} className={css.basketItemRemove}>
 								<svg width="24" height="24">
 									<use href="/sprite.svg#delete" />
 								</svg>

@@ -24,7 +24,7 @@ export type Good = {
 }
 
 export type BasketStoreOrder = {
-	key?: string
+	key: string
 	color?: string[]
 	size?: string[]
 	_id: string
