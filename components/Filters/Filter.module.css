@@ -24,9 +24,9 @@
 }
 
 .filter__link {
+	text-decoration: underline;
 	display: inline-block;
 	padding: 0.4rem 0.8rem;
-	border: 1px solid #ddd;
 	border-radius: 8px;
 	text-decoration: none;
 	color: inherit;

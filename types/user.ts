@@ -1,11 +1,14 @@
 export type User = {
-	phone: string
-	role: string
+	_id: string
 	email: string
-	username: string
+	username?: string
+	role: string
+	phone?: string
+	lastName?: string
+	warehoseNumber?: string
+	city?: string
 	avatar?: string
 	error?: string
-	_id: string;
 }
 
 export type EditUser = Omit<User, "avatar">

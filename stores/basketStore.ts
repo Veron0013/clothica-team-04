@@ -2,59 +2,71 @@ import { Good } from "@/types/goods"
 import { create } from "zustand"
 
 type StoreGood = {
+	key: string
 	id: Good["_id"]
 	color?: string
 	size?: string
 	quantity: number
 }
 
+type AddGoodPayload = {
+	id: Good["_id"]
+	color?: string
+	size?: string
+	quantity?: number
+}
+
 type BasketState = {
 	goods: StoreGood[]
-	addGood: (good: StoreGood) => void
-	removeGood: (id: StoreGood["id"]) => void
-	decrementGood: (id: StoreGood["id"]) => void
-	updateGoodQuantity: (id: StoreGood["id"], quantity: number) => void
+	addGood: (good: AddGoodPayload) => void
+	removeGood: (key: StoreGood["key"]) => void
+	decrementGood: (key: StoreGood["key"]) => void
+	updateGoodQuantity: (key: StoreGood["key"], quantity: number) => void
 	clearBasket: () => void
 }
 
-export const useBasket = create<BasketState>((set) => ({
-	goods: [],
+export const useBasket = create<BasketState>((set) => {
+	const buildGoodKey = (g: { id: string; size?: string; color?: string }) =>
+		`${g.id}_${g.size || "nosize"}_${g.color || "nocolor"}`
 
-	addGood: (good) =>
-		set((state) => {
-			const existing = state.goods.find((g) => g.id === good.id)
-			if (existing) {
-				return {
-					goods: state.goods.map((g) =>
-						g.id === good.id
-							? { ...g, quantity: g.quantity + 1 } // +1 при натисканні "+"
-							: g
-					),
+	return {
+		goods: [],
+
+		addGood: (good) =>
+			set((state) => {
+				const quantityToAdd = good.quantity ?? 1
+				const key = buildGoodKey(good)
+
+				const existing = state.goods.find((g) => g.key === key)
+
+				if (existing) {
+					return {
+						goods: state.goods.map((g) => (g.key === key ? { ...g, quantity: g.quantity + quantityToAdd } : g)),
+					}
 				}
-			}
-			return { goods: [...state.goods, { ...good }] }
-		}),
 
-	decrementGood: (id) =>
-		set((state) => ({
-			goods: state.goods
-				.map((g) =>
-					g.id === id
-						? { ...g, quantity: Math.max(0, g.quantity - 1) } // не нижче 0
-						: g
-				)
-				.filter((g) => g.quantity > 0), // якщо стало 0 — видаляємо
-		})),
+				return {
+					goods: [...state.goods, { ...good, key, quantity: quantityToAdd }],
+				}
+			}),
 
-	updateGoodQuantity: (id, quantity) =>
-		set((state) => ({
-			goods: state.goods.map((g) => (g.id === id ? { ...g, quantity: Math.max(0, quantity) } : g)),
-		})),
+		decrementGood: (key) =>
+			set((state) => ({
+				goods: state.goods
+					.map((g) => (g.key === key ? { ...g, quantity: Math.max(0, g.quantity - 1) } : g))
+					.filter((g) => g.quantity > 0),
+			})),
 
-	removeGood: (id) =>
-		set((state) => ({
-			goods: state.goods.filter((g) => g.id !== id),
-		})),
+		updateGoodQuantity: (key, quantity) =>
+			set((state) => ({
+				goods: state.goods.map((g) => (g.key === key ? { ...g, quantity: Math.max(0, quantity) } : g)),
+			})),
 
-	clearBasket: () => set({ goods: [] }),
-}))
+		removeGood: (key) =>
+			set((state) => ({
+				goods: state.goods.filter((g) => g.key !== key),
+			})),
+
+		clearBasket: () => set({ goods: [] }),
+	}
+})

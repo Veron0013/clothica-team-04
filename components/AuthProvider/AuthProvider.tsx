@@ -1,33 +1,29 @@
-// components/AuthProvider/AuthProvider.tsx
-
 "use client"
 
-import { checkSession, getMe } from "@/lib/api/clientApi"
-import { useAuthStore } from "@/stores/authStore"
 import { useEffect } from "react"
+import { useAuthStore } from "@/stores/authStore"
+import { nextServer } from "@/lib/api/api"
 
-type Props = {
-	children: React.ReactNode
-}
-
-const AuthProvider = ({ children }: Props) => {
-	const setUser = useAuthStore((state) => state.setUser)
-	const clearIsAuthenticated = useAuthStore((state) => state.clearIsAuthenticated)
+export default function AuthProvider({ children }: { children: React.ReactNode }) {
+	const setUser = useAuthStore((s) => s.setUser)
+	const clearIsAuthenticated = useAuthStore((s) => s.clearIsAuthenticated)
 
 	useEffect(() => {
-		const fetchUser = async () => {
-			const isAuthenticated = await checkSession()
-			if (isAuthenticated) {
-				const user = await getMe()
-				if (user) setUser(user)
-			} else {
+		const checkSession = async () => {
+			try {
+				const { data } = await nextServer.get("/auth/refresh")
+				if (data?.user) {
+					setUser(data.user)
+				} else {
+					clearIsAuthenticated()
+				}
+			} catch (e) {
 				clearIsAuthenticated()
 			}
 		}
-		fetchUser()
+
+		checkSession()
 	}, [setUser, clearIsAuthenticated])
 
-	return children
+	return <>{children}</>
 }
-
-export default AuthProvider
