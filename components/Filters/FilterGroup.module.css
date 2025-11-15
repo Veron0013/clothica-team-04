@@ -1,0 +1,21 @@
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 25 px;
+  border-bottom: 1px solid #eee;
+}
+
+.filterTitle {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 150%;
+  color: var(--color-scheme-1-text);
+  margin-bottom: 8px;
+}
+
+.filterList {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  list-style: none;
+}

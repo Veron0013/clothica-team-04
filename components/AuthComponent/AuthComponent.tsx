@@ -1,21 +1,20 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useQueryClient } from "@tanstack/react-query";
-import css from "./AuthComponent.module.css";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import css from "./AuthComponent.module.css"
+import { ErrorMessage, Field, Form, Formik } from "formik"
+import * as Yup from "yup"
 
-import { callAuth, type AuthValues } from "@/lib/api/authApi";
-import toastMessage, { MyToastType } from "@/lib/messageService";
-import { useAuthStore } from "@/stores/authStore";
+import toastMessage, { MyToastType } from "@/lib/messageService"
+import { useAuthStore } from "@/stores/authStore"
+import { callAuth } from "@/lib/api/clientApi"
+import { AuthValues } from "@/lib/api/authApi"
+import { PHONE_REGEXP } from "@/lib/vars"
 
 interface AuthComponentProps {
-  login?: boolean;
+	login?: boolean
 }
-
-const phoneRegExp = /^\+?3?8?(0\d{9})$/;
 
 const SignUpSchema = Yup.object().shape({
   name: Yup.string().min(2).max(20).required("Це поле обовʼязкове!"),
