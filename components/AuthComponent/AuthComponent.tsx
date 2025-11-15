@@ -11,21 +11,20 @@ import toastMessage, { MyToastType } from "@/lib/messageService"
 import { useAuthStore } from "@/stores/authStore"
 import { callAuth } from "@/lib/api/clientApi"
 import { AuthValues } from "@/lib/api/authApi"
+import { PHONE_REGEXP } from "@/lib/vars"
 
 interface AuthComponentProps {
 	login?: boolean
 }
 
-const phoneRegExp = /^\+?3?8?(0\d{9})$/
-
 const SignUpSchema = Yup.object().shape({
 	name: Yup.string().min(2).max(20).required("Це поле обовʼязкове!"),
-	phone: Yup.string().matches(phoneRegExp, "Введіть коректний номер телефону").required("Це поле обовʼязкове!"),
+	phone: Yup.string().matches(PHONE_REGEXP, "Введіть коректний номер телефону").required("Це поле обовʼязкове!"),
 	password: Yup.string().min(8).max(40).required("Це поле обовʼязкове!"),
 })
 
 const SignInSchema = Yup.object().shape({
-	phone: Yup.string().matches(phoneRegExp, "Введіть коректний номер телефону!").required("Це поле обовʼязкове!"),
+	phone: Yup.string().matches(PHONE_REGEXP, "Введіть коректний номер телефону!").required("Це поле обовʼязкове!"),
 	password: Yup.string().min(8).max(40).required("Це поле обовʼязкове!"),
 })
 

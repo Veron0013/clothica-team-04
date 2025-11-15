@@ -19,3 +19,5 @@ export const BREAKPOINTS = {
 }
 
 export const REVIEWS_PER_LOAD = 3
+
+export const PHONE_REGEXP = /^\+?3?8?(0\d{9})$/
