@@ -1,0 +1,19 @@
+.filterItem {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--color-scheme-1-text);
+}
+.filterLink {
+  padding: 8px 0;
+  font-size: 16px;
+  cursor: pointer;
+}
+.filterLink_active {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--color-white);
+}
+.filterLink_disabled {
+}
