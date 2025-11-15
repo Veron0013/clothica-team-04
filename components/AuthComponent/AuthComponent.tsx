@@ -22,14 +22,14 @@ const SignUpSchema = Yup.object().shape({
   phone: Yup.string()
     .matches(phoneRegExp, "Введіть коректний номер телефону")
     .required("Це поле обовʼязкове!"),
-  password: Yup.string().min(8).max(40).required("Це поле обовʼязкове!"),
+  password: Yup.string().min(8, "Пароль має містити мінімум 8 символів").max(40).required("Це поле обовʼязкове!"),
 });
 
 const SignInSchema = Yup.object().shape({
   phone: Yup.string()
     .matches(phoneRegExp, "Введіть коректний номер телефону!")
     .required("Це поле обовʼязкове!"),
-  password: Yup.string().min(8).max(40).required("Це поле обовʼязкове!"),
+  password: Yup.string().min(8, "Пароль має містити мінімум 8 символів").max(40).required("Це поле обовʼязкове!"),
 });
 
 export default function AuthComponent({ login = false }: { login?: boolean }) {
