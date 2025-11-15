@@ -1,13 +1,14 @@
 import { CategoriesResponse } from "@/types/categories"
 import { AllFilters } from "@/types/filters"
-import { BasketStoreGood, Good, GoodsQuery, GoodsResponse } from "@/types/goods"
+import { BasketStoreOrder, Good, GoodsQuery, GoodsResponse } from "@/types/goods"
 import { Order } from "@/types/orders"
 import axios, { AxiosError } from "axios"
 
 export type ApiError = AxiosError<{ error: string }>
 
 export const nextServer = axios.create({
-	baseURL: process.env.NEXT_PUBLIC_API_URL + "/",
+	//baseURL: process.env.NEXT_PUBLIC_API_URL + "/",
+	baseURL: process.env.NEXT_PUBLIC_API_URL,
 	withCredentials: true,
 })
 
@@ -20,12 +21,12 @@ export type BasketGoodsParams = {
 	goodIds: Good["_id"][]
 }
 
-export const getGoodsFromArray = async (query: BasketGoodsParams): Promise<BasketStoreGood[]> => {
+export const getGoodsFromArray = async (query: BasketGoodsParams): Promise<BasketStoreOrder[]> => {
 	const response = await nextServer.post("/goods/from-array", query)
 	return response.data
 }
 
-export const getCategories = async (page: number, limit: number): Promise<CategoriesResponse> => {
+export const getCategories = async (page: number, limit?: number): Promise<CategoriesResponse> => {
 	const response = await nextServer.get("/categories", {
 		params: { page, limit },
 	})
@@ -39,6 +40,6 @@ export const getFilterOptions = async (): Promise<AllFilters> => {
 }
 
 export const getUserOrders = async (userId: string): Promise<Order[]> => {
-  const response = await nextServer.get<Order[]>(`/orders/${userId}`);
-  return response.data;
-};
+	const response = await nextServer.get<Order[]>(`/orders/${userId}`)
+	return response.data
+}

@@ -87,7 +87,7 @@ const ProductsPageClient = () => {
 
 	return (
 		<div className={layoutStyle.layout}>
-			<FilterPanel />
+			<FilterPanel vieved={data?.limit || 0} total={data?.totalGoods || 0} />
 			<div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
 				{displayedGoods.length > 0 && <GoodsList items={displayedGoods} />}
 

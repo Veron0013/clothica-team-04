@@ -20,7 +20,7 @@ export default function PageClient({ productId, category }: Props) {
 
 	const handleBasketClick = () => {
 		setOpenBasket(true)
-		console.log("basket", goods)
+		//console.log("basket", goods)
 	}
 
 	return (
@@ -29,7 +29,7 @@ export default function PageClient({ productId, category }: Props) {
 				Залишити відгук
 			</button>
 			<button
-				onClick={() => addGood({ id: productId, quantity: 1 })}
+				onClick={() => addGood({ id: productId, quantity: 1, size: "3" })}
 				style={{ padding: "14px 20px", borderRadius: 12, fontWeight: 600 }}
 			>
 				додати товар
