@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation"
 
 import UserInfoForm from "@/components/UserInfoForm/UserInfoForm"
 import { useAuthStore } from "@/stores/authStore"
-import { logout } from "@/lib/api/authApi"
+
 import toastMessage, { MyToastType } from "@/lib/messageService"
 
 import css from "./ProfilePage.module.css"
 import { Order } from "@/types/orders"
 import { getUserOrders } from "@/lib/api/api"
 import MessageNoInfo from "@/components/MessageNoInfo/MessageNoInfo"
-
+import { logout } from "@/lib/api/clientApi"
 
 export default function ProfilePage() {
 	const router = useRouter()
@@ -83,7 +83,7 @@ export default function ProfilePage() {
 
 			<div className={css.profCont}>
 				<div className={css.information}>
-					<UserInfoForm />
+					<UserInfoForm isOrder={false} />
 				</div>
 
 				<div className={css.order}>

@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useQueryClient } from "@tanstack/react-query"
 import css from "./AuthComponent.module.css"
 import { ErrorMessage, Field, Form, Formik } from "formik"
 import * as Yup from "yup"
@@ -30,7 +29,6 @@ const SignInSchema = Yup.object().shape({
 
 export default function AuthComponent({ login = false }: AuthComponentProps) {
 	const router = useRouter()
-	const queryClient = useQueryClient()
 
 	const setUser = useAuthStore((s) => s.setUser)
 
@@ -43,22 +41,18 @@ export default function AuthComponent({ login = false }: AuthComponentProps) {
 			const userObj = await callAuth(login, values)
 			//const userObj = login ? data : data
 			if (!userObj) {
-				setStatus("Невідома помилка: користувача не отримано")
+				//setStatus("Невідома помилка: користувача не отримано")
 				toastMessage(MyToastType.error, "Сталася помилка. Спробуйте ще раз.")
-				return
+				throw new Error("")
 			}
 
 			setUser(userObj)
-
 			resetForm()
-
-			queryClient.invalidateQueries({ queryKey: ["me"] })
 
 			toastMessage(MyToastType.success, login ? "Ви успішно увійшли!" : "Ви успішно зареєструвалися!")
 			router.push("/")
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		} catch (e: any) {
-			const msg = e?.message || "Oops... some error"
+		} catch (e: unknown) {
+			const msg = e instanceof Error ? e.message : "Unknown error"
 			if (msg.includes("Phone and password required")) {
 				setFieldError("phone", "Вкажіть телефон")
 				setFieldError("password", "Вкажіть пароль")

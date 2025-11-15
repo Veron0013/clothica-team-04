@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import { useMutation } from "@tanstack/react-query"
 import { updateMe } from "@/lib/api/clientApi"
 import { PHONE_REGEXP } from "@/lib/vars"
+import { useAuthStore } from "@/stores/authStore"
 
 const UserInfoFormSchema = Yup.object().shape({
 	name: Yup.string().min(2).max(20).required("Це поле обовʼязкове!"),
@@ -24,15 +25,23 @@ interface UserInfoFormValues {
 	warehoseNumber: number
 }
 
-const initialValues: UserInfoFormValues = {
-	name: "Ваше імʼя",
-	lastname: "Ваше прізвище",
-	phone: "+38(0__) ___- __ - __",
-	city: "Ваше місто",
-	warehoseNumber: 1,
+interface Props {
+	isOrder: boolean
 }
 
-export default function UserInfoForm() {
+export default function UserInfoForm({ isOrder = false }: Props) {
+	const { user } = useAuthStore()
+
+	console.log("form-user", user, user?.name)
+
+	const initialValues: UserInfoFormValues = {
+		name: "Ваше імʼя",
+		lastname: "Ваше прізвище",
+		phone: user?.phone ? user.phone : "+38(0__) ___- __ - __",
+		city: "Ваше місто",
+		warehoseNumber: 1,
+	}
+
 	const router = useRouter()
 
 	const mutation = useMutation({
