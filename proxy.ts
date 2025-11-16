@@ -27,14 +27,14 @@ export async function proxy(request: NextRequest) {
 			let data = null
 			try {
 				data = await checkServerSession()
-			} catch {
-				//console.log("go home data")
-				goHome(cookieStore, request)
+			} catch (error) {
+				console.log("go home data", data, error)
+				goHome(cookieStore)
 			}
 
 			if (!data?.data.user) {
 				//console.log("go home data")
-				goHome(cookieStore, request)
+				goHome(cookieStore)
 			}
 
 			const setCookie = data?.headers["set-cookie"]
@@ -50,7 +50,7 @@ export async function proxy(request: NextRequest) {
 			return response
 		} else {
 			console.log("go home no token", sessionId, refreshToken)
-			goHome(cookieStore, request)
+			goHome(cookieStore)
 		}
 		// Якщо refreshToken або сесії немає:
 		// публічний маршрут — дозволяємо доступ
@@ -86,7 +86,7 @@ export const config = {
 	//matcher: ["/sign-in", "/sign-up"],
 }
 
-const goHome = (cookieStore: ReadonlyRequestCookies, request: NextRequest) => {
+const goHome = (cookieStore: ReadonlyRequestCookies) => {
 	cookieStore.delete("accessToken")
 	cookieStore.delete("refreshToken")
 	cookieStore.delete("sessionId")
