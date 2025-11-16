@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+// import type { Metadata } from "next";
 import { Inter, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
@@ -21,28 +21,28 @@ const nunitoSans = Nunito_Sans({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "Clothica - best clothers",
-  description: "Find your own style today",
-  openGraph: {
-    title: `Clothica - best clothers`,
-    description: "Find your own style today",
-    url: `https://movieDB.com`,
-    siteName: "Clothica",
-    images: [
-      {
-        url: "https://ac.goit.global/fullstack/react/movie DB-og-meta.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Clothica",
-      },
-    ],
-    type: "website",
-  },
-  icons: {
-    icon: "/favicon.svg",
-  },
-};
+// export const metadata: Metadata = {
+//   title: "Clothica - best clothers",
+//   description: "Find your own style today",
+//   openGraph: {
+//     title: `Clothica - best clothers`,
+//     description: "Find your own style today",
+//     url: `https://movieDB.com`,
+//     siteName: "Clothica",
+//     images: [
+//       {
+//         url: "https://ac.goit.global/fullstack/react/movie DB-og-meta.jpg",
+//         width: 1200,
+//         height: 630,
+//         alt: "Clothica",
+//       },
+//     ],
+//     type: "website",
+//   },
+//   icons: {
+//     icon: "/favicon.svg",
+//   },
+// };
 
 export default function RootLayout({
   children,
