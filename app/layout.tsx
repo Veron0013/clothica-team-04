@@ -8,6 +8,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
 import AuthPagesLayout from "@/components/AuthPagesLayout/AuthPagesLayout";
+import ProfilePage from "./(private routes)/profile/page";
 
 const interSans = Inter({
   variable: "--font-inter",
@@ -57,6 +58,7 @@ export default function RootLayout({
         <TanStackProvider>
           <div className="layout">
             <AuthProvider>
+              <ProfilePage />
               <Suspense fallback={<Loading />}>
                 <AuthPagesLayout>{children}</AuthPagesLayout>
               </Suspense>
