@@ -40,7 +40,7 @@ export function GoodsList({ items, dataQty }: Props) {
 												src={item.image}
 												alt={item.name}
 												fill
-												sizes="25vw"
+												sizes="33vw"
 												className={css.cardImg}
 												loading="lazy"
 											/>

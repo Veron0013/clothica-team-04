@@ -14,7 +14,7 @@ type FilterProps = {
 export default function Filter({ options, onClose, variant = "sidebar" }: FilterProps) {
 	if (!options) return null
 
-	const { categories = [], genders = [], sizes = [], colors = [] } = options
+	const { categories = [], genders = [], sizes = [], colors = [], fromPrice = 1, toPrice = 10000 } = options
 
 	const containerClass = variant === "sidebar" ? css.filterContainerSidebar : css.filterContainerDropdown
 
@@ -38,7 +38,7 @@ export default function Filter({ options, onClose, variant = "sidebar" }: Filter
 				multi
 			/>
 
-			<FilterGroupPrice />
+			<FilterGroupPrice MIN={fromPrice} MAX={toPrice} />
 
 			<FilterGroup
 				title="Колір"

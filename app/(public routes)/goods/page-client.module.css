@@ -12,6 +12,7 @@
 .layout {
   display: block;
 }
+
 .cardCta {
   display: block;
   width: 158px;
@@ -40,11 +41,43 @@
   color: var(--color-white);
   background: var(--color-deco-darkest);
 }
+
 .cardCta:disabled {
   background: var(--color-deco);
   opacity: 0.4;
   color: var(--color-neutral-darkest);
 }
+
+/* пошук сорт */
+
+.goodsContent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-bottom: 1.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchWrapper {
+  flex: 1 1 200px;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.sortWrapper select {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
 @media (min-width: 768px) {
   .layout {
     display: grid;
@@ -58,7 +91,12 @@
   .title {
     font-size: 48px;
   }
+
   .cardCta {
     margin-bottom: 112px;
+  }
+
+  .goodsContent {
+    margin-top: 16px;
   }
 }

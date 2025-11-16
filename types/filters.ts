@@ -8,3 +8,10 @@ export type AllFilters = {
 	fromPrice?: number
 	toPrice?: number
 }
+
+export type AllSortData = {
+	price_asc: "Ціна +"
+	price_desc: "Ціна -"
+	name_asc: "Назва +"
+	name_desc: "Назва -"
+}

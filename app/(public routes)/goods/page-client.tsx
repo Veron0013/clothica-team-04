@@ -7,23 +7,30 @@ import { CLEAR_FILTERS, PER_PAGE } from "@/lib/vars"
 import { Good, GoodsQuery } from "@/types/goods"
 import { keepPreviousData, useQuery } from "@tanstack/react-query"
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 import MessageNoInfo from "@/components/MessageNoInfo/MessageNoInfo"
 import css from "./page-client.module.css"
 import FilterPanel from "@/components/Filters/FilterPanel"
 import Loading from "@/app/loading"
+import { AllSortData } from "@/types/filters"
+import { debounce } from "lodash"
 
 const ProductsPageClient = () => {
 	const router = useRouter()
 	const sp = useSearchParams()
 	const pathname = usePathname()
 
-	const [isAppending, setIsAppending] = useState(false)
-	const [limit, setLimit] = useState(PER_PAGE)
 	const [displayedGoods, setDisplayedGoods] = useState<Good[]>([])
-
 	const [dataQty, setDataQty] = useState(0)
+
+	const limit = PER_PAGE
+
+	const initialSearch = sp.get("search") || ""
+	const initialSort = (sp.get("sort") as keyof AllSortData) || "price_asc"
+
+	const [searchValue, setSearchValue] = useState(initialSearch)
+	const [selectedSort, setSelectedSort] = useState<keyof AllSortData>(initialSort)
 
 	const searchParams: GoodsQuery = {
 		limit: Number(sp.get("limit")) || limit,
@@ -42,27 +49,6 @@ const ProductsPageClient = () => {
 		refetchOnMount: false,
 	})
 
-	// коли прийшла нова data
-	//useEffect(() => {
-	//	if (!data) return
-	//	setIsAppending(true)
-	//	const fetchDisplayedGoods = () => {
-	//		if (isAppending) {
-	//			setDisplayedGoods((prev) => {
-	//				const existingIds = new Set(prev.map((item) => item._id))
-	//				const newGoods = data.goods.filter((item) => !existingIds.has(item._id))
-	//				setDataQty(newGoods.length ?? 0)
-	//				return [...prev, ...newGoods]
-	//			})
-	//			setIsAppending(false)
-	//		} else {
-	//			setDisplayedGoods(data.goods)
-	//		}
-	//	}
-	//	fetchDisplayedGoods()
-	//	setIsAppending(false)
-	//}, [data, isAppending])
-
 	useEffect(() => {
 		if (!data) return
 		const fetchDisplayedGoods = () => {
@@ -79,11 +65,45 @@ const ProductsPageClient = () => {
 	}, [data])
 
 	const handleShowMore = () => {
-		setIsAppending(true)
 		const nextLimit = Number(searchParams.limit) + 3
 		const newParams = new URLSearchParams(sp)
 		newParams.set("limit", String(nextLimit))
 		router.push(`${pathname}?${newParams.toString()}`, { scroll: false })
+	}
+
+	////
+	const sortOptions: { value: keyof AllSortData; label: string }[] = [
+		{ value: "price_asc", label: "Ціна +" },
+		{ value: "price_desc", label: "Ціна -" },
+		{ value: "name_asc", label: "Назва +" },
+		{ value: "name_desc", label: "Назва -" },
+	]
+
+	const debouncedUpdateSearch = useMemo(
+		() =>
+			debounce((value: string) => {
+				const params = new URLSearchParams(sp.toString())
+				if (value) params.set("search", value)
+				else params.delete("search")
+				params.delete("page")
+				router.push(`${pathname}?${params.toString()}`, { scroll: false })
+			}, 300),
+		[sp, pathname, router]
+	)
+
+	const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setSearchValue(e.target.value)
+		debouncedUpdateSearch(e.target.value)
+	}
+
+	const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		const value = e.target.value as keyof AllSortData
+		setSelectedSort(value)
+
+		const params = new URLSearchParams(sp.toString())
+		params.set("sort", value)
+		params.delete("page")
+		router.push(`${pathname}?${params.toString()}`, { scroll: false })
 	}
 
 	return (
@@ -95,6 +115,29 @@ const ProductsPageClient = () => {
 					<FilterPanel vieved={Math.min(data?.limit || 0, data?.totalGoods || 0)} total={data?.totalGoods || 0} />
 
 					<div className={css.goodsContent}>
+						<div className={css.searchWrapper}>
+							<input
+								type="text"
+								placeholder="Пошук товарів..."
+								className={css.searchInput}
+								value={searchValue}
+								onChange={handleSearchChange}
+							/>
+						</div>
+						<div className={css.sortWrapper}>
+							<select
+								className={css.sortSelect}
+								value={selectedSort} // стан, який будемо створювати
+								onChange={handleSortChange}
+							>
+								{sortOptions.map((opt) => (
+									<option key={opt.value} value={opt.value}>
+										{opt.label}
+									</option>
+								))}
+							</select>
+						</div>
+
 						{displayedGoods.length > 0 && <GoodsList items={displayedGoods} dataQty={dataQty} />}
 
 						{isFetching && <Loading />}
