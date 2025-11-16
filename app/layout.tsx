@@ -10,16 +10,16 @@ import AuthProvider from "@/components/AuthProvider/AuthProvider";
 import AuthPagesLayout from "@/components/AuthPagesLayout/AuthPagesLayout";
 
 const interSans = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
+	variable: "--font-inter",
+	subsets: ["latin"],
+	display: "swap",
+})
 
 const nunitoSans = Nunito_Sans({
-  variable: "--font-nunito-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
+	variable: "--font-nunito-mono",
+	subsets: ["latin"],
+	display: "swap",
+})
 
 // export const metadata: Metadata = {
 //   title: "Clothica - best clothers",
@@ -45,27 +45,30 @@ const nunitoSans = Nunito_Sans({
 // };
 
 export default function RootLayout({
-  children,
+	children,
+	modal,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode
+	modal: React.ReactNode
 }>) {
-  return (
-    <html data-scroll-behavior="smooth" lang="en">
-      <body
-        className={`${interSans.variable} ${nunitoSans.variable} antialiased`}
-      >
-        <TanStackProvider>
-          <div className="layout">
-            <AuthProvider>
-              <Suspense fallback={<Loading />}>
-                <AuthPagesLayout>{children}</AuthPagesLayout>
-              </Suspense>
-            </AuthProvider>
-          </div>
-          <Toaster />
-          <ReactQueryDevtools initialIsOpen={false} />
-        </TanStackProvider>
-      </body>
-    </html>
-  );
+	return (
+		<html data-scroll-behavior="smooth" lang="en">
+			<body className={`${interSans.variable} ${nunitoSans.variable} antialiased`}>
+				<TanStackProvider>
+					<div className="layout">
+						<AuthProvider>
+							<Suspense fallback={<Loading />}>
+								<AuthPagesLayout>
+									{children}
+									{modal}
+								</AuthPagesLayout>
+							</Suspense>
+						</AuthProvider>
+					</div>
+					<Toaster />
+					<ReactQueryDevtools initialIsOpen={false} />
+				</TanStackProvider>
+			</body>
+		</html>
+	)
 }
