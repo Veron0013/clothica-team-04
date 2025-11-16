@@ -122,6 +122,7 @@
 }
 
 /* щоб один бігунок гарантовано був над іншим */
+
 .sliderWrapper input[type="range"]:first-of-type {
   z-index: 2;
 }
