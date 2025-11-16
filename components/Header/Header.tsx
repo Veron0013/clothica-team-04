@@ -15,40 +15,42 @@ export default function Header() {
 
 	const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 	const setUser = useAuthStore((state) => state.setUser)
+	const user = useAuthStore((state) => state.user)
 	const clearIsAuthenticated = useAuthStore((state) => state.clearIsAuthenticated)
 
-	//const [authChecked, setAuthChecked] = useState(false)
+	const [authChecked, setAuthChecked] = useState(false)
 
 	const goods = useBasket((state) => state.goods)
 	const basketCount = goods.reduce((sum, item) => sum + item.quantity, 0)
 	// ✅ якщо стор уже каже, що логін виконано — вважаємо, що можна рендерити одразу
-	//const ready = authChecked || isAuthenticated
+	const ready = authChecked || isAuthenticated
 
 	useEffect(() => {
+		//console.log("fetch", user, isAuthenticated)
 		//if (isAuthenticated) return setAuthChecked(true)
 
 		const fetchCurrentUser = async () => {
 			try {
 				const userData = await getMe()
-				//console.log("header-user", userData)
+				console.log("header-user", userData)
 				if (!userData) throw new Error()
 				setUser(userData)
 			} catch (e) {
-				//console.log("header-error", e)
-				if (!isAuthenticated) clearIsAuthenticated()
+				console.log("header-error", e)
+				if (isAuthenticated) clearIsAuthenticated()
+			} finally {
+				setAuthChecked(true)
 			}
-			//} finally {
-			//	setAuthChecked(true)
-			//}
 		}
 		fetchCurrentUser()
-	}, [isAuthenticated, setUser, clearIsAuthenticated])
+	}, [isAuthenticated])
 
+	console.log("after fetch", user, isAuthenticated)
 	// невеликий QoL: якщо стан вже став isAuthenticated=true (з форми) — не чекай fetch
-	//useEffect(() => {
-	//	//console.log("header-user-effect", isAuthenticated, user)
-	//	if (isAuthenticated) setAuthChecked(true)
-	//}, [isAuthenticated])
+	useEffect(() => {
+		//console.log("header-user-effect", isAuthenticated, user)
+		if (isAuthenticated) setAuthChecked(true)
+	}, [isAuthenticated])
 
 	useEffect(() => {
 		document.body.style.overflow = menuOpen ? "hidden" : ""
@@ -77,21 +79,25 @@ export default function Header() {
 					</ul>
 
 					<div className={css.auth}>
-						{isAuthenticated ? (
-							<>
-								<Link href="/profile" className={css.navUpBasket}>
-									Кабінет
-								</Link>
-							</>
+						{ready ? (
+							isAuthenticated ? (
+								<>
+									<Link href="/profile" className={css.navUpBasket}>
+										Кабінет
+									</Link>
+								</>
+							) : (
+								<>
+									<Link href="/sign-in" className={css.navUp}>
+										Вхід
+									</Link>
+									<Link href="/sign-up" className={css.navIn}>
+										Реєстрація
+									</Link>
+								</>
+							)
 						) : (
-							<>
-								<Link href="/sign-in" className={css.navUp}>
-									Вхід
-								</Link>
-								<Link href="/sign-up" className={css.navIn}>
-									Реєстрація
-								</Link>
-							</>
+							""
 						)}
 
 						<div className={css.navCont}>
