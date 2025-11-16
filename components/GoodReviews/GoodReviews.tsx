@@ -81,37 +81,7 @@ export default function GoodReviews({
 
       <div className={styles.content}>
         {feedbacks.length > 0 ? (
-          <>
-            <ProductRewiews reviews={feedbacks} />
-
-            {totalPages > 1 && (
-              <div className={styles.pagination}>
-                <button
-                  className={styles.pageBtn}
-                  onClick={() => setPage((old) => Math.max(old - 1, 1))}
-                  disabled={page === 1}
-                >
-                  Назад
-                </button>
-
-                <span className={styles.pageInfo}>
-                  Сторінка {page} з {totalPages}
-                </span>
-
-                <button
-                  className={styles.pageBtn}
-                  onClick={() => {
-                    if (!isPlaceholderData && page < totalPages) {
-                      setPage((old) => old + 1);
-                    }
-                  }}
-                  disabled={isPlaceholderData || page === totalPages}
-                >
-                  Далі
-                </button>
-              </div>
-            )}
-          </>
+          <ProductRewiews reviews={feedbacks} />
         ) : (
             <div className={styles.noReviews}>
               <p>Ще немає відгуків про цей товар. Будьте першим!</p>

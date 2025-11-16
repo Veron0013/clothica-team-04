@@ -49,12 +49,25 @@
   color: var(--color-neutral-darkest);
 }
 
+
+
 @media (min-width: 768px) {
     .writeBtn {
 width: 160px;
 }
-
 }
+
+@media (min-width: 1440px) {
+.writeBtn:hover, .writeBtn:focus {
+  background-color: var(--color-deco-dark);
+  border-color: var(--color-deco-dark);
+}
+
+.writeBtn:active {
+  background-color: var(--color-deco-darker);
+  border-color: var(--color-deco-darker);
+}
+    }
 
 /* --- КОНТЕНТ З ВІДГУКАМИ --- */
 .content {
