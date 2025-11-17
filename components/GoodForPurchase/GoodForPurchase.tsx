@@ -340,7 +340,6 @@ export default function GoodForPurchase({ good }: GoodForPurchaseProps) {
 													))}
 												</p>
 											))}
-											{good.description}
 										</div>
 									)}
 
