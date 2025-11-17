@@ -72,6 +72,7 @@ export default function GoodForPurchase({ good }: GoodForPurchaseProps) {
 			quantity: quantity,
 			size: selectedSize || "",
 			color: selectedColor || undefined,
+			price: good.price,
 		})
 		setQuantity(1)
 	}
@@ -339,7 +340,6 @@ export default function GoodForPurchase({ good }: GoodForPurchaseProps) {
 													))}
 												</p>
 											))}
-											{good.description}
 										</div>
 									)}
 

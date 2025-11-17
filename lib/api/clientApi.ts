@@ -1,5 +1,6 @@
 import { User } from "@/types/user"
 import { nextAuthServer } from "./api"
+import { Order } from "@/types/orders"
 
 //axios.defaults.baseURL = MAIN_URL
 //axios.defaults.headers.common["Authorization"] = `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`
@@ -94,7 +95,7 @@ export const getMe = async () => {
 	const refreshSession = await checkSession()
 	if (refreshSession) {
 		const { data } = await nextAuthServer.get<User>("/users/me")
-		console.log("getMe", data)
+		console.log("getMe-session", data)
 		return data
 	} else {
 		throw new Error(JSON.stringify({ message: "Session expired", code: 401 }))
@@ -103,8 +104,14 @@ export const getMe = async () => {
 
 export const getUsersMe = async () => {
 	const { data } = await nextAuthServer.get<User>("/users/me")
-	console.log("getMe", data)
+	console.log("get-Me", data)
 	return data
+}
+
+export const sendOrder = async (payload: Order) => {
+	//const endpiondUrl = payload.userId ? "orders" : "/orders/guest"
+	const res = await nextAuthServer.post<User>("order", payload)
+	return res.data
 }
 
 export const updateMe = async (payload: UpdateUserRequest) => {
