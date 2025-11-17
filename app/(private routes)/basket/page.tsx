@@ -1,5 +1,3 @@
-"use client";
+const Default = () => null
 
-export default function BasketModalPage() {
-  return null;
-}
+export default Default
