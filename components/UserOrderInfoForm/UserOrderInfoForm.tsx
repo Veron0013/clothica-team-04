@@ -9,6 +9,9 @@ import { updateMe } from "@/lib/api/clientApi"
 import { PHONE_REGEXP } from "@/lib/vars"
 import { useAuthStore } from "@/stores/authStore"
 import toastMessage, { MyToastType } from "@/lib/messageService"
+import { debounce } from "lodash"
+import { useState, useEffect, useMemo } from "react"
+import { CityRespNP, searchCities, searchWarehouses, WarehoseRespNP } from "@/lib/api/nPostApi"
 
 const UserInfoFormSchema = Yup.object().shape({
 	name: Yup.string().min(2).max(20).required("Це поле обовʼязкове!"),
@@ -22,17 +25,22 @@ interface UserInfoFormValues {
 	name: string
 	lastname: string
 	phone: string
-	city: string
+	city?: string
 	comment?: string
-	warehoseNumber: number
+	warehoseNumber?: string
 }
 
-interface Props {
-	isOrder: boolean
-}
-
-export default function UserInfoForm({ isOrder = false }: Props) {
+export default function UserOrderInfoForm() {
 	const user = useAuthStore((state) => state.user)
+	const router = useRouter()
+
+	const [cityQuery, setCityQuery] = useState("") // що вводить користувач
+	const [cities, setCities] = useState<CityRespNP[]>([])
+	const [selectedCityRef, setSelectedCityRef] = useState<string | null>(null)
+
+	const [warehouses, setWarehouses] = useState<WarehoseRespNP[]>([])
+	//const [loadingCities, setLoadingCities] = useState(false)
+	const [loadingWarehouses, setLoadingWarehouses] = useState(false)
 
 	console.log("form-user", user, user?.name)
 
@@ -41,11 +49,41 @@ export default function UserInfoForm({ isOrder = false }: Props) {
 		lastname: "Ваше прізвище",
 		phone: user?.phone ? user.phone : "+38(0__) ___- __ - __",
 		city: "Ваше місто",
-		warehoseNumber: 1,
+		warehoseNumber: "1",
 		comment: "Введіть ваш коментар",
 	}
 
-	const router = useRouter()
+	useEffect(() => {
+		debouncedSearch(cityQuery)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [cityQuery])
+
+	const debouncedSearch = useMemo(
+		() =>
+			debounce(async (str: string) => {
+				if (str.length < 3) return
+
+				const data = await searchCities(str)
+				setCities(data)
+			}, 400),
+		[]
+	)
+
+	const handleCityInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setCityQuery(e.target.value)
+		debouncedSearch(e.target.value)
+		setSelectedCityRef(null) // якщо юзер почав писати знову — скидаємо вибране місто
+	}
+
+	const loadWarehouses = async (cityRef: string) => {
+		setLoadingWarehouses(true)
+		try {
+			const data = await searchWarehouses(cityRef)
+			setWarehouses(data)
+		} finally {
+			setLoadingWarehouses(false)
+		}
+	}
 
 	const mutation = useMutation({
 		mutationFn: (data: UserInfoFormValues) => updateMe(data),
@@ -65,6 +103,8 @@ export default function UserInfoForm({ isOrder = false }: Props) {
 			},
 		})
 	}
+
+	console.log("fetch", cities, warehouses)
 	return (
 		<div className={css.order_container}>
 			<Formik initialValues={initialValues} validationSchema={UserInfoFormSchema} onSubmit={handleSubmit}>
@@ -92,35 +132,54 @@ export default function UserInfoForm({ isOrder = false }: Props) {
 							<div className={css.label_wrapper}>
 								<div className={css.label}>
 									<label htmlFor="city">Місто доставки*</label>
-									<Field id="city" className={css.input} type="text" name="city" />
+									<Field
+										id="city"
+										name="city"
+										type="text"
+										value={cityQuery}
+										onChange={handleCityInputChange}
+										className={css.input}
+									/>
 									<ErrorMessage name="city" component="p" className={css.error} />
-								</div>
-								<div className={css.label}>
-									<label htmlFor="warehoseNumber">Номер відділення Нової Пошти*</label>
 
-									<Field id="warehoseNumber" className={css.input} type="number" name="warehoseNumber" />
-									<ErrorMessage name="warehoseNumber" component="p" className={css.error} />
+									{/* Список підказок */}
+									{cities.length > 0 && (
+										<ul className={css.suggestions}>
+											{cities.map((c) => (
+												<li key={c.Ref} onClick={() => loadWarehouses(c.Ref)}>
+													{c.Description}, {c.Area}
+												</li>
+											))}
+										</ul>
+									)}
 								</div>
 							</div>
-							{isOrder && (
-								<div className={css.label}>
-									<label htmlFor="comment">Коментар</label>
 
-									<Field id="comment" className={css.input} type="text" name="comment" />
-									<ErrorMessage name="comment" component="p" className={css.error} />
-								</div>
-							)}
+							<div className={css.label}>
+								<label htmlFor="warehoseNumber">Номер відділення Нової Пошти*</label>
+
+								<Field
+									id="warehoseNumber"
+									name="warehoseNumber"
+									as="select"
+									disabled={!selectedCityRef || loadingWarehouses}
+									className={css.input}
+								>
+									<option value="">Оберіть відділення</option>
+									{warehouses.map((wh) => (
+										<option key={wh.Number} value={wh.Number}>
+											{wh.Number} – {wh.ShortAddress}
+										</option>
+									))}
+								</Field>
+
+								<ErrorMessage name="warehoseNumber" component="p" className={css.error} />
+							</div>
 						</fieldset>
 
-						{!isOrder ? (
-							<button className={css.button} type="submit" disabled={isSubmitting || mutation.isPending}>
-								{mutation.isPending ? "Збереження..." : "Зберегти зміни"}
-							</button>
-						) : (
-							<button className={css.button} type="submit" disabled={isSubmitting || mutation.isPending}>
-								{mutation.isPending ? "Оформлення замовлення..." : "Оформити замовлення"}
-							</button>
-						)}
+						<button className={css.button} type="submit" disabled={isSubmitting || mutation.isPending}>
+							{mutation.isPending ? "Оформлення замовлення..." : "Оформити замовлення"}
+						</button>
 					</Form>
 				)}
 			</Formik>
