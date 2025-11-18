@@ -64,7 +64,7 @@
   --color-scheme-6-border: var(--opacity-neutral-darkest-15);
   --color-scheme-6-accent: var(--color-neutral-darkest);
   --color-scheme-6-foreground: var(--color-deco-dark);
-  --color-red: #9d0000;
+  --color-red: #860303;
   --color-scheme-9-accent: #fff;
   --background: var(--color-deco-lighter);
   --foreground: var(--color-scheme-4-text);
@@ -114,7 +114,7 @@
   --color-deco-darker: #c5e1a5;
   --color-deco-darkest: #c5e1a5;
 
-  --color-red: #9d0000;
+  --color-red: #f17575;
   /* червоний залишаємо */
   --opacity-neutral-darkest-5: #4e5a42;
   /* === СХЕМИ (повністю підігнані під макет) === */
@@ -192,7 +192,8 @@ body {
 }
 
 svg {
-  fill: --color-scheme-1-text;
+  fill: var(--color-scheme-6-foreground);
+  stroke: var(--color-neutral-darkest);
 }
 
 a {
