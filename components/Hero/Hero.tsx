@@ -1,7 +1,27 @@
-import css from "./Hero.module.css";
-import Image from "next/image";
+'use client';
+import { useEffect, useRef, useState } from 'react';
+import css from './Hero.module.css';
+import Image from 'next/image';
 
 export default function Hero() {
+  const [showVideo, setShowVideo] = useState(false);
+  const [videoFinished, setVideoFinished] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    // Затримка 1 сек перед запуском анімації
+    const timer = setTimeout(() => {
+      setShowVideo(true);
+      videoRef.current?.play();
+      console.log('play');
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleEnded = () => {
+    setVideoFinished(true);
+  };
   return (
     <section className={css.hero}>
       <div className={css.container}>
@@ -33,7 +53,7 @@ export default function Hero() {
             <source
               media="(max-width: 767px)"
               srcSet="
-        /images/hero/hero-mobile.webp 1x,
+        /images/hero/main.jpg 1x,
         /images/hero/hero-mobile@2x.webp 2x
       "
               width="335"
@@ -42,14 +62,14 @@ export default function Hero() {
             <source
               media="(max-width: 1439px)"
               srcSet="
-        /images/hero/hero-tablet.webp 1x,
+        /images/hero/main.jpg 1x,
         /images/hero/hero-tablet@2x.webp 2x
       "
               width="336"
               height="425"
             />
             <Image
-              src="/images/hero/hero-desktop.webp"
+              src="/images/hero/main.jpg"
               alt="Clothica — find your style"
               width={640}
               height={394}
@@ -60,6 +80,20 @@ export default function Hero() {
               loading="eager"
             />
           </picture>
+          {/* ---- Анімаційне відео ---- */}
+          {showVideo && (
+            <video
+              ref={videoRef}
+              src="/images/hero/main-screen.mp4"
+              className={`${css.heroVideo} ${
+                videoFinished ? css.hide : css.show
+              }`}
+              muted
+              autoPlay
+              playsInline
+              onEnded={handleEnded}
+            />
+          )}
         </div>
       </div>
     </section>
