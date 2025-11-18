@@ -138,6 +138,9 @@
   line-height: 1.5;
   font-weight: 600;
 }
+.icon {
+  fill: var(--color-scheme-6-text);
+}
 
 @media (min-width: 375px) {
   .container {
