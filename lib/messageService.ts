@@ -29,22 +29,22 @@ export function normalizePhone(phone: string): string | null {
 
   // кейс 1: 380XXXXXXXXX (11 цифр)
   if (/^380\d{9}$/.test(digits)) {
-    return '+' + digits;
+    return digits;
   }
 
   // кейс 2: 0XXXXXXXXX (10 цифр)
   if (/^0\d{9}$/.test(digits)) {
-    return '+38' + digits;
+    return '38' + digits;
   }
 
   // кейс 3: 80XXXXXXXXX (10 цифр, без +3)
   if (/^80\d{8}$/.test(digits)) {
-    return '+3' + digits;
+    return '3' + digits;
   }
 
   // кейс 4: 8XXXXXXXXX (починається з 8)
   if (/^8\d{9}$/.test(digits)) {
-    return '+38' + digits;
+    return '38' + digits;
   }
 
   return null;

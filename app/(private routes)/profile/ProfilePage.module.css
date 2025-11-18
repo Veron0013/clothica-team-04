@@ -1,5 +1,5 @@
 .profile {
-  margin-bottom: 80px;
+  /*margin-bottom: 48px;*/
 }
 
 .title {
@@ -83,11 +83,13 @@
   transition: background-color 0.3s ease, border 0.3s ease;
   color: var(--color-scheme-6-text);
 }
+
 .logoutBtn:hover,
 .logoutBtn:focus {
   border: 1px solid #4e5a42;
   background-color: #9db484;
 }
+
 .logoutBtn:active {
   background-color: var(--color-deco-darkest);
   border: 1px solid var(--color-deco);
@@ -101,7 +103,7 @@
     margin: 0 auto;
     width: 156px;
     height: 36px;
-    margin-top: 48px;
+    margin: 48px auto;
   }
 
   .orderColSt {
@@ -128,5 +130,9 @@
 
   .order {
     width: 640px;
+  }
+
+  .logoutBtn {
+    margin-bottom: 80px;
   }
 }

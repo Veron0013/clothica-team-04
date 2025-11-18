@@ -42,6 +42,7 @@ export default function UserOrderInfoForm() {
   const user = useAuthStore(state => state.user);
   const router = useRouter();
   const basketGoods = useBasket(state => state.goods);
+  const clearBasket = useBasket(state => state.clearBasket);
 
   const [cityQuery, setCityQuery] = useState(''); // що вводить користувач
   const [cities, setCities] = useState<CityRespNP[]>([]);
@@ -92,7 +93,9 @@ export default function UserOrderInfoForm() {
         MyToastType.success,
         'Ви успішно відправили замовлення! Очікуйте на доставку'
       );
+
       router.push('/');
+      clearBasket();
     },
   });
 
@@ -100,6 +103,7 @@ export default function UserOrderInfoForm() {
     values: UserOrderInfoFormValues,
     actions: FormikHelpers<UserOrderInfoFormValues>
   ) => {
+    console.log(values);
     if (basketGoods.length === 0) {
       toastMessage(MyToastType.error, 'Кошик порожній!');
       actions.setSubmitting(false);
@@ -127,10 +131,10 @@ export default function UserOrderInfoForm() {
 
     //console.log('order', order);
 
-    //mutation.mutate(order, {
-    //  onSettled: () => actions.setSubmitting(false),
-    //  onSuccess: () => actions.resetForm({ values }),
-    //});
+    mutation.mutate(order, {
+      onSettled: () => actions.setSubmitting(false),
+      onSuccess: () => actions.resetForm({ values }),
+    });
   };
 
   //console.log("fetch", cities, warehouses)
@@ -145,10 +149,10 @@ export default function UserOrderInfoForm() {
         enableReinitialize
         initialValues={{
           name: user?.name || '',
-          lastname: user?.lastName || '',
+          lastname: user?.lastname || '',
           phone: user?.phone || '',
           city: user?.city || '',
-          warehoseNumber: '',
+          warehoseNumber: user?.warehoseNumber || '',
           comment: '',
         }}
         validationSchema={UserInfoFormSchema}
@@ -216,7 +220,8 @@ export default function UserOrderInfoForm() {
                     type="text"
                     //value={cityQuery}
                     //onChange={handleCityInputChange}
-                    className={css.input}
+                    className={getInputClass(errors.city, touched.city)}
+                    placeholder="Ваше місто"
                   />
                   <ErrorMessage
                     name="city"
@@ -245,7 +250,11 @@ export default function UserOrderInfoForm() {
                     //as="select"
                     type="text"
                     //disabled={!selectedCityRef || loadingWarehouses}
-                    className={css.input}
+                    placeholder="Ваш номер відділення"
+                    className={getInputClass(
+                      errors.warehoseNumber,
+                      touched.warehoseNumber
+                    )}
                   >
                     {/*<option value="">Оберіть відділення</option>
                     {warehouses.map(wh => (
