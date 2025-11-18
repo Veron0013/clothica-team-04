@@ -81,7 +81,7 @@ export default function UserOrderInfoForm() {
 					lastname: user?.lastName || "",
 					phone: user?.phone || "",
 					city: user?.city || "",
-					warehoseNumber: user?.warehoseNumber ? user.warehoseNumber : "1",
+					warehoseNumber: user?.warehoseNumber ? user.warehoseNumber : "",
 					comment: "",
 				}}
 				validationSchema={UserInfoFormSchema}
@@ -89,7 +89,7 @@ export default function UserOrderInfoForm() {
 			>
 				{({ isSubmitting, errors, touched }) => (
 					<Form className={css.form}>
-						<fieldset className={css.form}>
+						<fieldset className={css.form_set}>
 							<legend className={css.text}>Особиста інформація</legend>
 							<div className={css.label_wrapper}>
 								<div className={css.label}>
@@ -158,11 +158,12 @@ export default function UserOrderInfoForm() {
 								<label htmlFor="comment">Коментар</label>
 
 								<Field
+									as="textarea"
 									id="comment"
-									className={getInputClass(errors.comment, touched.comment)}
-									type="text"
+									className={`${getInputClass(errors.comment, touched.comment)} ${css.comment}`}
 									name="comment"
-									placeholder=""
+									placeholder="Введіть ваш коментар"
+									rows={6}
 								/>
 								<ErrorMessage name="comment" component="p" className={css.error} />
 							</div>
