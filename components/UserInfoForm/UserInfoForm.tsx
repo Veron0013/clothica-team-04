@@ -26,15 +26,6 @@ export default function UserInfoForm() {
   const user = useAuthStore(state => state.user);
   const setUser = useAuthStore(state => state.setUser);
 
-  console.log('form-user', user, user?.name);
-
-  const initialValues: UserInfoFormValues = {
-    name: user?.name || '',
-    lastname: user?.lastname || user?.lastname || '',
-    phone: user?.phone || '',
-    city: user?.city || '',
-    warehoseNumber: user?.warehoseNumber || user?.warehoseNumber || '',
-  };
   const router = useRouter();
 
   const mutation = useMutation({

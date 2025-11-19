@@ -18,23 +18,13 @@ export default function Header() {
 
   // Zustand
   const hasHydrated = useAuthStore(s => s.hasHydrated);
-  const user = useAuthStore(s => s.user);
+  //const user = useAuthStore(s => s.user);
   const setUser = useAuthStore(s => s.setUser);
   const clearIsAuthenticated = useAuthStore(s => s.clearIsAuthenticated);
   const isAuthenticated = useAuthStore(s => s.isAuthenticated);
 
   const goods = useBasket(s => s.goods);
   const basketCount = goods.reduce((sum, item) => sum + item.quantity, 0);
-
-  console.log(
-    'HEADER RENDER',
-    'hasHydrated',
-    hasHydrated,
-    'user',
-    user,
-    'isAuthenticated',
-    isAuthenticated
-  );
 
   useEffect(() => {
     if (!hasHydrated) return;
@@ -43,12 +33,14 @@ export default function Header() {
       try {
         const data = await getUsersMe();
         setUser(data);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
         clearIsAuthenticated();
       }
     };
 
     verify();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasHydrated, isAuthenticated]);
 
   useEffect(() => {

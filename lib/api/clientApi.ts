@@ -66,6 +66,7 @@ export const getUsersMe = async (): Promise<User> => {
     const res = await nextAuthServer.get('/users/me');
     //console.log("GET USERS ME RESPONSE:", res);
     return res.data;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
     //console.log("GET USERS ME ERROR:", err);
     throw new Error('Не вдалося отримати користувача');
