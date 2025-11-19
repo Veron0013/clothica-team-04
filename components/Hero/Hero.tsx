@@ -53,23 +53,23 @@ export default function Hero() {
             <source
               media="(max-width: 767px)"
               srcSet="
-        /images/hero/main.jpg 1x,
-        /images/hero/hero-mobile@2x.webp 2x
+        /images/hero/hero-mobile-vid.webp 1x,
+        /images/hero/hero-mobile-vid.webp 2x
       "
-              width="335"
+              width="424"
               height="335"
             />
             <source
               media="(max-width: 1439px)"
               srcSet="
-        /images/hero/main.jpg 1x,
-        /images/hero/hero-tablet@2x.webp 2x
+        /images/hero/hero-desktop-vid.webp 1x,
+        /images/hero/hero-desktop-vid.webp 2x
       "
               width="336"
               height="425"
             />
             <Image
-              src="/images/hero/main.jpg"
+              src="/images/hero/hero-desktop-vid.webp"
               alt="Clothica — find your style"
               width={640}
               height={394}
