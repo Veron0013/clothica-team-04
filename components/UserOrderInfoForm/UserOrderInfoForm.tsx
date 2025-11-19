@@ -45,7 +45,7 @@ export default function UserOrderInfoForm() {
   const [warehouses, setWarehouses] = useState<WarehoseRespNP[]>([]);
   const [warehouseQuery, setWarehouseQuery] = useState('');
   //const [loadingCities, setLoadingCities] = useState(false)
-  const [loadingWarehouses, setLoadingWarehouses] = useState(false);
+  //const [loadingWarehouses, setLoadingWarehouses] = useState(false);
   const [showWarehousesList, setShowWarehousesList] = useState(false);
 
   //console.log('form-user', user, user?.name);
@@ -65,13 +65,13 @@ export default function UserOrderInfoForm() {
     () =>
       debounce(async (ref: string, search: string) => {
         if (!ref || search.length === 0) return;
-        setLoadingWarehouses(true);
+        //setLoadingWarehouses(true);
 
         try {
           const data = await searchWarehouses(ref, search); // API-based search
           setWarehouses(data);
         } finally {
-          setLoadingWarehouses(false);
+          //setLoadingWarehouses(false);
         }
       }, 400),
     []
@@ -115,14 +115,14 @@ export default function UserOrderInfoForm() {
   };
 
   const loadWarehouses = async (ref: string, search: string) => {
-    setLoadingWarehouses(true);
+    //setLoadingWarehouses(true);
 
     try {
       const data = await searchWarehouses(ref, search);
       setWarehouses(data);
       setShowWarehousesList(true);
     } finally {
-      setLoadingWarehouses(false);
+      //setLoadingWarehouses(false);
     }
   };
 
