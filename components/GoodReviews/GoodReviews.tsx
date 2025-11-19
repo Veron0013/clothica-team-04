@@ -16,7 +16,7 @@ import Loader from '@/app/loading';
 import ProductRewiews from '../LastReviews/ProductRewiews';
 import ReviewModal from '@/components/ReviewModal/ReviewModal';
 
-import styles from './GoodReviews.module.css';
+import css from './GoodReviews.module.css';
 import reviewStyles from '@/components/LastReviews/LastReviews.module.css';
 
 interface GoodReviewsProps {
@@ -43,7 +43,7 @@ export default function GoodReviews({
   if (isLoading) return <Loader />;
 
   if (isError) {
-    return <p className={styles.error}>Не вдалося завантажити відгуки.</p>;
+    return <p className={css.error}>Не вдалося завантажити відгуки.</p>;
   }
 
   const feedbacks = data?.items || [];
@@ -71,12 +71,12 @@ export default function GoodReviews({
   const isLastPage = page >= totalPages;
 
   return (
-    <section className={styles.reviewsSection} id="reviews">
-      <div className={styles.header}>
-        <h2 className={styles.title}>Відгуки клієнтів</h2>
+    <section className={css.reviewsSection} id="reviews">
+      <div className={css.header}>
+        <h2 className={css.title}>Відгуки клієнтів</h2>
 
         <button
-          className={styles.writeBtn}
+          className={css.writeBtn}
           type="button"
           onClick={handleOpenModal}
         >
@@ -84,7 +84,7 @@ export default function GoodReviews({
         </button>
       </div>
 
-      <div className={styles.content}>
+      <div className={css.content}>
         {feedbacks.length > 0 ? (
           <>
             <ProductRewiews reviews={feedbacks} />
@@ -118,11 +118,13 @@ export default function GoodReviews({
             )}
           </>
         ) : (
-          <div className={styles.noReviews}>
-            <p>Ще немає відгуків про цей товар. Будьте першим!</p>
+          <div className={css.noReviews}>
+            <p className={css.noReviewsText}>
+              Ще немає відгуків про цей товар. Будьте першим!
+            </p>
 
             <button
-              className={styles.writeBtnNoReviews}
+              className={css.writeBtnNoReviews}
               type="button"
               onClick={handleOpenModal}
             >
