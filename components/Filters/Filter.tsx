@@ -4,6 +4,7 @@ import { AllFilters } from '@/types/filters';
 import FilterGroup from './FilterGroup';
 import FilterGroupPrice from './FilterGroupPrice';
 import css from './Filter.module.css';
+import { GENDER_OPTIONS } from '@/lib/vars';
 
 type FilterProps = {
   options: AllFilters;
@@ -13,14 +14,14 @@ type FilterProps = {
 
 export default function Filter({
   options,
-  onClose,
+
   variant = 'sidebar',
 }: FilterProps) {
   if (!options) return null;
 
   const {
     categories = [],
-    genders = [],
+    //genders = [],
     sizes = [],
     //colors = [],
     fromPrice = 1,
@@ -38,7 +39,6 @@ export default function Filter({
         title="Усі"
         name="category"
         options={categories.map(c => ({ value: c._id, label: c.name }))}
-        onClose={onClose}
         className={css.groupAll}
         hideInput
       />
@@ -47,7 +47,6 @@ export default function Filter({
         title="Розміри"
         name="sizes"
         options={sizes.map(s => ({ value: s, label: s }))}
-        onClose={onClose}
         className={css.groupSizes}
         multi
       />
@@ -68,8 +67,7 @@ export default function Filter({
       <FilterGroup
         title="Стать"
         name="gender"
-        options={genders.map(g => ({ value: g, label: g }))}
-        onClose={onClose}
+        options={GENDER_OPTIONS}
         className={css.groupGender}
       />
     </div>
