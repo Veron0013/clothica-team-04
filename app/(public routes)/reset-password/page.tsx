@@ -20,7 +20,7 @@ const ResetPassword = () => {
   };
 
   const SendMailSchema = Yup.object().shape({
-    password: Yup.string().min(8).max(36).required(),
+    password: Yup.string().min(8).max(36).required('Це поле обовʼязкове!'),
   });
 
   const fieldId = useId();

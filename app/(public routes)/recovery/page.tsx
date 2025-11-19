@@ -23,7 +23,7 @@ export default function RecoveryPassword() {
     phone: '',
   };
   const SendMailSchema = Yup.object().shape({
-    email: Yup.string().email('Невалідний формат e-mail').required(),
+    email: Yup.string().email('Невалідний формат e-mail').required('Це поле обовʼязкове!'),
     phone: Yup.string()
       .matches(PHONE_REGEXP, 'Введіть коректний номер телефону')
       .required('Це поле обовʼязкове!'),
