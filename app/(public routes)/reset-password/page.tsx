@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import { resetPassword } from '@/lib/api/clientApi';
 import toastMessage, { MyToastType } from '@/lib/messageService';
 import Link from 'next/link';
+import { BiHide, BiShow } from "react-icons/bi"
 
 const ResetPassword = () => {
   interface ResetPasswordFormValues {
@@ -96,10 +97,9 @@ const ResetPassword = () => {
                 autoComplete="off"
                 className={css.input}
               />
-              <span
-                className={css.toggleIcon}
-                onClick={() => setShow(!show)}
-              ></span>
+              <span className={css.toggleIcon} onClick={() => setShow(!show)}>
+								{!show ? <BiHide /> : <BiShow />}
+									</span>
             </div>
           </div>
 
