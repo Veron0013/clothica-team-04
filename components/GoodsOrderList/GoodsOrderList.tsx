@@ -74,7 +74,9 @@ export default function GoodsOrderList() {
   const deliveryCost = subtotal > 0 ? DELIVERY_PRICE : 0; // умовна доставка
   const total = subtotal + deliveryCost;
 
-  if (loading) return <div className={css.basketLoading}>Loading...</div>;
+  if (loading && goodsData.length === 0) {
+    return <div className={css.basketLoading}>Loading...</div>;
+  }
   if (goodsData.length === 0)
     return <div className={css.basketEmpty}>Кошик порожній</div>;
   return (
