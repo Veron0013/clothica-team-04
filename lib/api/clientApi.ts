@@ -61,11 +61,13 @@ export const checkSession = async (): Promise<void> => {
   }
 };
 
-export const getUsersMe = async (): Promise<User> => {
+export const getUsersMe = async (): Promise<User | null> => {
   try {
-    const res = await nextAuthServer.get('/users/me');
-    //console.log("GET USERS ME RESPONSE:", res);
-    return res.data;
+    const res = await nextAuthServer.get('/users/me', {
+      validateStatus: () => true,
+    });
+    //console.log('GET USERS ME RESPONSE:', res);
+    return res.status === 200 ? res.data : null;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (err) {
     //console.log("GET USERS ME ERROR:", err);
