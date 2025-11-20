@@ -27,13 +27,10 @@
   line-height: 140%;
   letter-spacing: -0.01em;
   margin-bottom: 32px;
-  /* min-height: 75px;  // можна лишити або забрати, як буде виглядати */
-
-  display: -webkit-box;
-  -webkit-line-clamp: 4; /* скільки рядків залишити */
-  -webkit-box-orient: vertical;
-  overflow: auto;
+  height: 150px;
 }
+
+  
 .name {
   font-weight: 600;
   font-size: 16px;

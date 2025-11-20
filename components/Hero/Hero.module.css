@@ -2,6 +2,7 @@
   padding-top: 64px;
   padding-bottom: 64px;
 }
+
 .container {
   width: 100%;
   margin-left: auto;
@@ -26,6 +27,7 @@
   margin-bottom: 32px;
   text-align: left;
 }
+
 .actionsList {
   display: flex;
   flex-direction: column;
@@ -77,11 +79,15 @@
   background-color: var(--opacity-neutral-darkest-15);
   border: 1px solid var(--opacity-neutral-darkest-50);
 }
+
 .imageWrapper {
+  position: relative;
   border-radius: 16px;
   overflow: hidden;
   height: auto;
+  overflow: hidden;
 }
+
 .heroImage {
   width: 100%;
   height: 100%;
@@ -93,6 +99,7 @@
   .container {
     max-width: 375px;
   }
+
   .actionItem {
     max-width: 335px;
   }
@@ -128,31 +135,73 @@
     width: fit-content;
   }
 }
+
 @media (min-width: 1440px) {
-    .hero {
-        padding-top: 112px;
-        padding-bottom: 112px;
-        }
-    .container {
-        max-width: 1440px;
-        align-items: center;
-    }
-    .textWrapper {
-        max-width: 640px;
-    }
-    
-    .title {
-        font-size: 56px;
-    }
-    .imageWrapper {
+  .hero {
+    padding-top: 112px;
+    padding-bottom: 112px;
+  }
+
+  .container {
+    max-width: 1440px;
+    align-items: center;
+  }
+
+  .textWrapper {
+    max-width: 640px;
+  }
+
+  .title {
+    font-size: 56px;
+  }
+
+  .imageWrapper {
     width: 640px;
     height: 394px;
     flex-shrink: 0;
-        }
-    .heroImage {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        }
+  }
+
+  .heroImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+/*///////////////////////*/
+.heroWrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+
+.heroImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.heroVideo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  /*inset: 0;*/
+  width: 640px;
+
+  object-fit: con;
+  /*opacity: 0;*/
+  z-index: 10;
+  transition: opacity 0.6s ease;
+}
+
+/* Плавно з’являється */
+.heroVideo.show {
+  opacity: 1;
+}
+
+/* Плавно зникає */
+.heroVideo.hide {
+  opacity: 1;
 }
