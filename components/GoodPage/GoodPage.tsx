@@ -9,6 +9,7 @@ import MessageNoInfo from '@/components/MessageNoInfo/MessageNoInfo';
 import { Good } from '@/types/goods';
 import { getGoodByIdClient } from '@/lib/productsServise';
 import styles from './GoodPage.module.css';
+import { GO_TO_SHOPPING_BUTTON } from '@/lib/vars';
 
 interface GoodPageClientProps {
   goodId: string;
@@ -39,7 +40,7 @@ export default function GoodPageClient({
       <div className={styles.centerContainer}>
         <MessageNoInfo
           text="На жаль, товар не знайдено, або виникла помилка завантаження."
-          buttonText="До покупок"
+          buttonText={GO_TO_SHOPPING_BUTTON}
           route="/goods"
         />
       </div>

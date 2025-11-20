@@ -6,6 +6,7 @@ import Modal from '@/components/Modal/Modal';
 import style from './ModalBasket.module.css';
 import GoodsOrderList from '@/components/GoodsOrderList/GoodsOrderList';
 import MessageNoInfo from '@/components/MessageNoInfo/MessageNoInfo';
+import { BEFORE_SHOPPING_MESSAGE, GO_TO_SHOPPING_BUTTON } from '@/lib/vars';
 
 export default function BasketModalPage() {
   const router = useRouter();
@@ -59,8 +60,8 @@ export default function BasketModalPage() {
         ) : (
           <div className={style.basketEmpty}>
             <MessageNoInfo
-              text="Ваш кошик порожній, мершій до покупок!"
-              buttonText="До покупок"
+              text={BEFORE_SHOPPING_MESSAGE}
+              buttonText={GO_TO_SHOPPING_BUTTON}
               route="/goods"
             />
           </div>

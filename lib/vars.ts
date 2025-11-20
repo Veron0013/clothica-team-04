@@ -16,9 +16,11 @@ export const CLEAR_FILTERS: string =
   'За вашим запитом не знайдено жодних товарів, спробуйте змінити фільтри, або скинути їх';
 export const LEAVE_REVIEW_MESSAGE: string = 'У цього товару ще немає відгуків';
 export const BEFORE_SHOPPING_MESSAGE: string =
-  'Ваш кошик порожній, мершій до покупок!';
+  'Ваш кошик порожній, мерщій до покупок!';
 export const GO_TO_SHOPPING: string =
-  'У вас ще не було жодних замовлень! Мершій до покупок!';
+  'У вас ще не було жодних замовлень! Мерщій до покупок!';
+
+export const GO_TO_SHOPPING_BUTTON: string = 'До покупок';
 
 export const BREAKPOINTS = {
   mobile: '767px',

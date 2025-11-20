@@ -13,6 +13,7 @@ import { Order } from '@/types/orders';
 import { getUserOrders } from '@/lib/api/api';
 import MessageNoInfo from '@/components/MessageNoInfo/MessageNoInfo';
 import { logout } from '@/lib/api/clientApi';
+import { GO_TO_SHOPPING, GO_TO_SHOPPING_BUTTON } from '@/lib/vars';
 
 ////////////////////////////////////////////////////
 
@@ -108,15 +109,7 @@ export default function ProfilePage() {
 
           {/*{ordersError && <p className={css.error}>{ordersError}</p>}*/}
 
-          {ordersError && orders.length === 0 && (
-            <MessageNoInfo
-              text="У вас ще не було жодних замовлень! Мерщій до покупок!"
-              buttonText="До покупок"
-              route="/goods"
-            />
-          )}
-
-          {orders.length > 0 && (
+          {orders.length > 0 ? (
             <ul className={css.orderList}>
               {orders.map(order => (
                 <li key={order._id} className={css.orderItem}>
@@ -144,6 +137,14 @@ export default function ProfilePage() {
                 </li>
               ))}
             </ul>
+          ) : (
+            !isLoadingOrders && (
+              <MessageNoInfo
+                buttonText={GO_TO_SHOPPING_BUTTON}
+                text={GO_TO_SHOPPING}
+                route="/goods"
+              ></MessageNoInfo>
+            )
           )}
         </div>
       </div>
