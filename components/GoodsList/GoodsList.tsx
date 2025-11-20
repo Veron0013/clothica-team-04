@@ -18,6 +18,23 @@ type Props = {
   dataQty: number;
 };
 
+// 🔹 утиліта, яка безпечно дістає src картинки з товару
+const getImageSrc = (image: Good['image']): string => {
+  const value: any = image;
+
+  if (!value) return '';
+
+  if (typeof value === 'string') return value;
+
+  if (Array.isArray(value) && value.length > 0) {
+    const first = value[0] as any;
+    if (typeof first === 'string') return first;
+    if (first && typeof first.url === 'string') return first.url;
+  }
+
+  return '';
+};
+
 export function GoodsList({ items, dataQty }: Props) {
   const isClient = useIsClient();
   const isDesktopLayout = useMediaQuery(`(min-width: ${BREAKPOINTS.desktop})`);
@@ -71,19 +88,8 @@ export function GoodsList({ items, dataQty }: Props) {
 
     const cartRect = cartIconEl.getBoundingClientRect();
 
-    let imageSrc = '';
-
-    if (typeof item.image === 'string') {
-      imageSrc = item.image;
-    } else if (Array.isArray(item.image) && item.image.length > 0) {
-      const first = item.image[0] as any;
-      imageSrc =
-        typeof first === 'string'
-          ? first
-          : typeof first?.url === 'string'
-          ? first.url
-          : '';
-    }
+    // 🔹 тут вже безпечне діставання src
+    const imageSrc = getImageSrc(item.image);
 
     if (!imageSrc) {
       console.log('❌ imageSrc порожній, анімація не запущена');
@@ -107,6 +113,7 @@ export function GoodsList({ items, dataQty }: Props) {
           const delay = isNew ? (index - (items.length - dataQty)) * 100 : 0;
 
           const isAdded = !!addedGoods[item._id];
+          const cardImageSrc = getImageSrc(item.image) || (item.image as any); // fallback
 
           return (
             <li
@@ -129,7 +136,7 @@ export function GoodsList({ items, dataQty }: Props) {
                   >
                     <div className={css.cardImgWrap} data-card-img-wrap="true">
                       <Image
-                        src={item.image as any}
+                        src={cardImageSrc as any}
                         alt={item.name}
                         fill
                         sizes="33vw"
@@ -219,7 +226,7 @@ export function GoodsList({ items, dataQty }: Props) {
                   >
                     <div className={css.cardImgWrap} data-card-img-wrap="true">
                       <Image
-                        src={item.image as any}
+                        src={cardImageSrc as any}
                         alt={item.name}
                         fill
                         sizes="(min-width:1440px) 25vw, (min-width:768px) 25vw, 50vw"
